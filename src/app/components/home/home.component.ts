@@ -1,10 +1,22 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnInit,
+  inject,
+  ChangeDetectorRef,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
 import { Carousel, CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { ImageModule } from 'primeng/image';
 import { CommonModule } from '@angular/common';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { DISCORD_URL } from '../../constants';
+import {
+  KitsooneApiService,
+  ProductResponse,
+  ShowcaseItem,
+} from '../../service';
 
 interface CarouselResponsiveOption {
   breakpoint: string;
@@ -25,12 +37,18 @@ interface CarouselResponsiveOption {
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeComponent implements OnInit {
+  private readonly apiService = inject(KitsooneApiService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   protected readonly discordUrl = DISCORD_URL;
-  protected products!: unknown[];
-  protected showcase!: unknown[];
+  protected products: ProductResponse[] = [];
+  protected showcase!: ShowcaseItem[];
   protected showNavigators = false;
+  protected isLoadingProducts = false;
+  protected productsError: string | null = null;
 
   protected carouselResponsiveOptions: CarouselResponsiveOption[] = [
     {
@@ -50,61 +68,16 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  protected showcaseResponsiveOptions: CarouselResponsiveOption[] = [
-    {
-      breakpoint: '1024px',
-      numVisible: 2,
-      numScroll: 2,
-    },
-    {
-      breakpoint: '768px',
-      numVisible: 1,
-      numScroll: 1,
-    },
-    {
-      breakpoint: '560px',
-      numVisible: 1,
-      numScroll: 1,
-    },
-  ];
-
   protected get shouldShowNavigators(): boolean {
     return this.getCurrentNumVisible() < 4;
   }
 
   public ngOnInit(): void {
     Carousel.prototype.onTouchMove = (): void => undefined;
-    this.products = [
-      {
-        id: '1000',
-        name: 'OLED Display E-Paper',
-        description: 'Product Description',
-        image: 'assets/images/niceview.jpg',
-        price: '100.000',
-      },
-      {
-        id: '1001',
-        name: 'White Switches x70',
-        description: 'Product Description',
-        image: 'assets/images/whiteswitch.jpg',
-        price: '90.000',
-      },
-      {
-        id: '1002',
-        name: 'Supermini MCU',
-        description: 'Product Description',
-        image: 'assets/images/nicenano.jpg',
-        price: '130.000',
-      },
-      {
-        id: '1003',
-        name: 'Brown Switches x70',
-        description: 'Product Description',
-        image: 'assets/images/brownswitch.jpg',
-        price: '90.000',
-      },
-    ];
 
+    this.loadProducts();
+
+    // Keep showcase as static data for now
     this.showcase = [
       {
         id: '1',
@@ -123,6 +96,29 @@ export class HomeComponent implements OnInit {
         image: 'assets/images/showcase4.jpg',
       },
     ];
+  }
+
+  private loadProducts(): void {
+    this.isLoadingProducts = true;
+    this.productsError = null;
+
+    this.apiService.getProducts().subscribe({
+      next: (products) => {
+        // Validate and ensure all products have required fields
+        this.products = products;
+        this.isLoadingProducts = false;
+        this.cdr.markForCheck();
+      },
+      error: (error) => {
+        console.error('Failed to load products:', error);
+        this.productsError = error.message || 'Failed to load products';
+        this.isLoadingProducts = false;
+
+        // Fallback to demo data if API fails
+        this.products = [];
+        this.cdr.markForCheck();
+      },
+    });
   }
 
   protected getCurrentNumVisible(): number {

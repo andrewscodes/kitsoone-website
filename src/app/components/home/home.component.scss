@@ -74,7 +74,6 @@
       font-weight: 600;
       margin-top: 3rem;
       margin-bottom: 1rem;
-      margin-left: 8px;    
       color: var(--text-color-dark);
     }
   }
@@ -130,14 +129,56 @@
   &__showcase-container {
     box-sizing: border-box;
     margin-bottom: 2rem;
+    position: relative;
 
     h2 {
       font-size: 1.5rem;
       font-weight: 600;
       margin-top: 3rem;
       margin-bottom: 1rem;
-      margin-left: 8px;    
       color: var(--text-color-dark);
+    }   
+
+    swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50vh;
+      width: auto;
+      img {              
+        height: 100%;    
+      }
+    }
+
+    .custom-swiper-prev,
+    .custom-swiper-next {
+      position: absolute;
+      top: 50%;      
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.5);    
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;      
+      color: white;      
+      
+      &:focus {
+        outline: none;
+      }
+      @media (max-width: 600px) {
+        display: none;
+      }
+    }
+    
+    .custom-swiper-prev {
+      left: 4rem;
+    }
+    
+    .custom-swiper-next {
+      right: 4rem;
     }
   }
 }
