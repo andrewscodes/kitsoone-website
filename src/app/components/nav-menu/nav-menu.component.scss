@@ -3,13 +3,13 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  border-bottom: 1px solid var(--transparent-black);
 
   &__content {
     display: flex;
     align-items: center;
     box-sizing: border-box;
     height: var(--menu-height);
-    border-bottom: 1px solid var(--transparent-black);
   }
 
   &__logo {        

@@ -31,10 +31,11 @@
         </div>
       }
 
-      <!-- Products carousel -->
-      @if (!isLoadingProducts) {
-        <p-carousel [value]="products" [showNavigators]="shouldShowNavigators" [showIndicators]="false" [numVisible]="4" [numScroll]="1" [circular]="false" [responsiveOptions]="carouselResponsiveOptions">
-            <ng-template let-product #item>
+      <!-- Products carousel -->  
+      @if (!isLoadingProducts) {           
+        <swiper-container #productsSwiper init="false">             
+          @for (product of products; track product.id) {
+            <swiper-slide>                
                 <div class="border border-surface rounded-border m-2 p-4">
                     <div class="mb-4">
                         <div class="relative mx-auto">
@@ -45,10 +46,13 @@
                     <div class="flex justify-between items-center">
                         <div class="mt-0 font-semibold text-xl">${{ product.price ? product.price.toFixed(2) : '0.00' }}</div>                     
                     </div>
-                </div>
-            </ng-template>
-        </p-carousel>
-      }     
+                </div>                
+            </swiper-slide>
+          }         
+        </swiper-container>  
+        <swiper-pagination class="swiper-pagination">
+        </swiper-pagination>
+      }          
     </div>
   </div>  
   <div class="home__community-section">
@@ -69,10 +73,11 @@
       navigation-prev-el=".custom-swiper-prev"
       navigation-next-el=".custom-swiper-next"         
       slides-per-view="auto"
-      space-between="30"     >      
+      pagination="true"
+      space-between="15"     >      
       @for (build of showcase; track build.id) {
-        <swiper-slide lazy="true">
-              <img [src]="build.image" class="rounded-border" loading="lazy"/>                         
+        <swiper-slide>
+              <img [src]="build.image" class="rounded-border"/>                         
         </swiper-slide>
       }
     </swiper-container>    

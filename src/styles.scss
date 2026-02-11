@@ -2,9 +2,15 @@
 @use './tailwind.css';
 @use './themes.scss';
 
+/* Import Swiper styles */
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+@import 'swiper/css/navigation';
+
 :root {
   --page-width: 100rem;
   --menu-height: 65px;
+  --swiper-pagination-color: var(--primary-accent);
 }
 
 html, body {
