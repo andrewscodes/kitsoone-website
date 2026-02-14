@@ -39,7 +39,7 @@ export class KitsooneApiService {
           }
           // If response is wrapped in ApiResponse format
           if (response && typeof response === 'object' && 'data' in response) {
-            return (response as any).data || [];
+            return (response as { data: ProductResponse[] }).data || [];
           }
           return [];
         }),

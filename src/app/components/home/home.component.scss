@@ -153,11 +153,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 50vh;
+      height: 45vh;
       width: auto;
       img {              
         height: 100%;    
       }
+    }
+
+    .swiper-showcase{
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
     }
 
     .custom-swiper-prev,

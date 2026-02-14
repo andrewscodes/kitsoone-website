@@ -50,8 +50,7 @@
             </swiper-slide>
           }         
         </swiper-container>  
-        <swiper-pagination class="swiper-pagination">
-        </swiper-pagination>
+        <swiper-pagination class="swiper-products swiper-pagination"/>
       }          
     </div>
   </div>  
@@ -66,21 +65,15 @@
     </div>
   </div>
   <div class="home__showcase-container page-width">
-    <h2>Showcase de nuestros usuarios</h2>    
-    <button class="custom-swiper-prev"><i class="pi pi-chevron-left"></i></button>
-    <button class="custom-swiper-next"><i class="pi pi-chevron-right"></i></button>
-    <swiper-container     
-      navigation-prev-el=".custom-swiper-prev"
-      navigation-next-el=".custom-swiper-next"         
-      slides-per-view="auto"
-      pagination="true"
-      space-between="15"     >      
+    <h2>Showcase de nuestros usuarios</h2>        
+    <swiper-container #showcaseSwiper init="false">      
       @for (build of showcase; track build.id) {
         <swiper-slide>
               <img [src]="build.image" class="rounded-border"/>                         
         </swiper-slide>
       }
     </swiper-container>    
+    <swiper-pagination class="swiper-showcase"/>
   </div>
   
 </section>

@@ -9,7 +9,6 @@ import {
   ElementRef,
   PLATFORM_ID,
 } from '@angular/core';
-import { Carousel, CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { ImageModule } from 'primeng/image';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
@@ -25,19 +24,16 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kitsoone-home',
   standalone: true,
-  imports: [
-    CommonModule,
-    CarouselModule,
-    TagModule,
-    ImageModule,
-    AutoFocusModule,
-  ],
+  imports: [CommonModule, TagModule, ImageModule, AutoFocusModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('productsSwiper', { static: false }) public swiperRef?: ElementRef;
+  @ViewChild('productsSwiper', { static: false })
+  public productsSwiperRef?: ElementRef;
+  @ViewChild('showcaseSwiper', { static: false })
+  public showcaseSwiperRef?: ElementRef;
   private readonly apiService = inject(KitsooneApiService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly platformId = inject(PLATFORM_ID);
@@ -49,8 +45,6 @@ export class HomeComponent implements OnInit {
   protected productsError: string | null = null;
 
   public ngOnInit(): void {
-    Carousel.prototype.onTouchMove = (): void => undefined;
-
     this.loadProducts();
 
     // Keep showcase as static data for now
@@ -72,13 +66,15 @@ export class HomeComponent implements OnInit {
         image: 'assets/images/showcase4.jpg',
       },
     ];
+
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => this.initializeShowcaseSwiper(), 300);
+    }
   }
 
-  private async initializeSwiper(): Promise<void> {
+  private initializeProductsSwiper(): void {
     try {
-      await customElements.whenDefined('swiper-container');
-
-      if (!this.swiperRef?.nativeElement) {
+      if (!this.productsSwiperRef?.nativeElement) {
         return;
       }
 
@@ -87,8 +83,8 @@ export class HomeComponent implements OnInit {
         spaceBetween: 15,
         pagination: {
           clickable: true,
-          el: '.swiper-pagination',
-          renderBullet: function (_index: number, className: any) {
+          el: '.swiper-products',
+          renderBullet: function (_index: number, className: string) {
             return `<span class="${className}"></span>`;
           },
         },
@@ -105,8 +101,34 @@ export class HomeComponent implements OnInit {
         },
       };
 
-      Object.assign(this.swiperRef.nativeElement, params);
-      this.swiperRef.nativeElement.initialize();
+      Object.assign(this.productsSwiperRef.nativeElement, params);
+      this.productsSwiperRef.nativeElement.initialize();
+    } catch (error) {
+      console.warn('Failed to initialize swiper:', error);
+    }
+  }
+
+  private initializeShowcaseSwiper(): void {
+    try {
+      if (!this.showcaseSwiperRef?.nativeElement) {
+        return;
+      }
+
+      const params = {
+        slidesPerView: 'auto',
+        spaceBetween: 15,
+        pagination: {
+          clickable: true,
+          el: '.swiper-showcase',
+          renderBullet: function (_index: number, className: string) {
+            return `<span class="${className}"></span>`;
+          },
+        },
+        lazy: false,
+      };
+
+      Object.assign(this.showcaseSwiperRef.nativeElement, params);
+      this.showcaseSwiperRef.nativeElement.initialize();
     } catch (error) {
       console.warn('Failed to initialize swiper:', error);
     }
@@ -124,7 +146,7 @@ export class HomeComponent implements OnInit {
 
         // Initialize swiper after a short delay to ensure DOM is ready
         if (isPlatformBrowser(this.platformId)) {
-          setTimeout(() => this.initializeSwiper(), 300);
+          setTimeout(() => this.initializeProductsSwiper(), 300);
         }
       },
       error: (error) => {
