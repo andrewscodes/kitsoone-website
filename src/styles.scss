@@ -9,7 +9,9 @@
 :root {
   --page-width: 100rem;
   --menu-height: 65px;
-  --swiper-pagination-color: var(--primary-accent);
+  --swiper-pagination-color: var(--primary-accent);  
+  --p-primary-color: var(--primary-accent) !important;
+  --p-primary-hover-color: var(--primary-accent) !important;
 }
 
 html, body {

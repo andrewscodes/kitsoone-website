@@ -71,4 +71,9 @@ export class NavMenuComponent {
     this.router.navigate(['/acerca-de']);
     this.onMenuItemClick();
   }
+
+  protected onProductsItemClick(): void {
+    this.router.navigate(['/productos']);
+    this.onMenuItemClick();
+  }
 }

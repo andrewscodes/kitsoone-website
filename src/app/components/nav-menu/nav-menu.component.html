@@ -6,7 +6,7 @@
 
     <ul class="navbar__menu" [class.navbar__sidebar]="isSidebarMenuOpen">
       <div class="navbar__menu-options">
-        <li (click)="onMenuItemClick(); $event.stopPropagation()">Productos</li>
+        <li (click)="onProductsItemClick(); $event.stopPropagation()">Productos</li>
         <li (click)="onMenuItemClick(); $event.stopPropagation()">Guias</li>
         <li (click)="onAboutClick(); $event.stopPropagation()">Acerca de</li>
         <li (click)="onMenuItemClick(); $event.stopPropagation()">Contacto</li>

@@ -1,0 +1,233 @@
+//todo: - fix all css and remove unnecessary styles.
+
+.products {
+  padding: 2rem 1.5rem;
+  min-height: 70vh;
+
+  &__header {
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-color-dark);
+      margin: 0;
+    }
+  }
+
+  &__container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 2rem;
+
+    @media (max-width: 968px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__sidebar {
+    @media (max-width: 968px) {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__filter-group {
+    background: var(--surface-card);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  &__filter-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color-dark);
+  }
+
+  &__filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__filter-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+
+    input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    span {
+      font-size: 1rem;
+      color: var(--text-color-dark);
+      user-select: none;
+    }
+  }
+
+  &__main {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    // Product card styling
+    > div {
+      background: var(--surface-card);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+      }
+
+      .font-medium {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text-color-dark);
+        min-height: 2.5rem;
+        flex-grow: 1;
+      }
+    }
+  }
+
+  &__loading,
+  &__error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-color-dark);
+
+    i {
+      font-size: 2rem;
+    }
+
+    p {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+    }
+  }
+
+  &__error {
+    color: #e74c3c;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__card {
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: var(--surface-card);
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    &-image {
+      margin-bottom: 1rem;
+      overflow: hidden;
+      border-radius: 8px;
+
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+    }
+
+    &-name {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: var(--text-color-dark);
+      min-height: 2.5rem;
+    }
+
+    &-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &-price {
+      font-size: 1.25rem;
+      font-weight: 600;      
+    }
+  }
+
+  &__no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-color-dark);
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .products {
+    padding: 1.5rem 1rem;
+
+    &__header {
+      h1 {
+        font-size: 1.75rem;
+      }
+    }
+  }
+}
