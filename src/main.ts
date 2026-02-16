@@ -5,7 +5,7 @@ import { register as registerSwiper } from 'swiper/element/bundle';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
-registerLocaleData(localeEs);
+registerLocaleData(localeEs, 'es');
 registerSwiper();
 bootstrapApplication(AppComponent, appConfig).catch((err) =>
   console.error(err),
