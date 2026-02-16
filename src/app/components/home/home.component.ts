@@ -79,8 +79,8 @@ export class HomeComponent implements OnInit {
       }
 
       const params = {
-        slidesPerView: 1,
-        spaceBetween: 15,
+        slidesPerView: 2,
+        spaceBetween: 20,
         pagination: {
           clickable: true,
           el: '.swiper-products',
@@ -92,11 +92,11 @@ export class HomeComponent implements OnInit {
         breakpoints: {
           760: {
             slidesPerView: 3,
-            spaceBetween: 15,
+            spaceBetween: 30,
           },
           1024: {
             slidesPerView: 4,
-            spaceBetween: 15,
+            spaceBetween: 30,
           },
         },
       };

@@ -35,15 +35,15 @@
         <swiper-container #productsSwiper init="false">             
           @for (product of products; track product.id) {
             <swiper-slide>                
-                <div class="border border-surface rounded-border m-2 p-4">
-                    <div class="mb-4">
+                <div class="border-surface">
+                    <div class="mb-2">
                         <div class="relative mx-auto">
                             <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />                         
                         </div>
                     </div>
-                    <div class="mb-4 font-medium">{{ product.name || 'Product Name' }}</div>
+                    <div class="mb-2 font-semibold text-lg">{{ product.name || 'Product Name' }}</div>
                     <div class="flex justify-between items-center">
-                        <div class="mt-0 font-semibold text-xl">${{ product.price ? product.price.toFixed(2) : '0.00' }}</div>                     
+                        <div class="mt-0 font-medium text-base">${{ product.price | number:'1.0-0':'es' }}</div>                     
                     </div>
                 </div>                
             </swiper-slide>
