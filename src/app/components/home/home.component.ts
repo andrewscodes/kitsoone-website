@@ -1,13 +1,13 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  OnInit,
   inject,
   ChangeDetectorRef,
   CUSTOM_ELEMENTS_SCHEMA,
   ViewChild,
   ElementRef,
   PLATFORM_ID,
+  afterNextRender,
 } from '@angular/core';
 import { TagModule } from 'primeng/tag';
 import { ImageModule } from 'primeng/image';
@@ -29,7 +29,7 @@ import {
   styleUrls: ['./home.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   @ViewChild('productsSwiper', { static: false })
   public productsSwiperRef?: ElementRef;
   @ViewChild('showcaseSwiper', { static: false })
@@ -44,8 +44,10 @@ export class HomeComponent implements OnInit {
   protected isLoadingProducts = false;
   protected productsError: string | null = null;
 
-  public ngOnInit(): void {
-    this.loadProducts();
+  constructor() {
+    afterNextRender(() => {
+      this.loadProducts();
+    });
 
     // Keep showcase as static data for now
     this.showcase = [
@@ -71,6 +73,34 @@ export class HomeComponent implements OnInit {
       setTimeout(() => this.initializeShowcaseSwiper(), 300);
     }
   }
+
+  // public ngOnInit(): void {
+  //   this.loadProducts();
+
+  //   // Keep showcase as static data for now
+  //   this.showcase = [
+  //     {
+  //       id: '1',
+  //       image: 'assets/images/showcase1.jpg',
+  //     },
+  //     {
+  //       id: '2',
+  //       image: 'assets/images/showcase2.jpg',
+  //     },
+  //     {
+  //       id: '3',
+  //       image: 'assets/images/showcase3.jpg',
+  //     },
+  //     {
+  //       id: '4',
+  //       image: 'assets/images/showcase4.jpg',
+  //     },
+  //   ];
+
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     setTimeout(() => this.initializeShowcaseSwiper(), 300);
+  //   }
+  // }
 
   private initializeProductsSwiper(): void {
     try {
