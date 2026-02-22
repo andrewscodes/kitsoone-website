@@ -92,16 +92,8 @@
 @media (max-width: 768px) {
   .footer {
     &__content {
-      grid-template-columns: 1fr;
-      text-align: center;
+      grid-template-columns: 1fr;      
       padding: 0 1rem;
-    }
-
-    &__section {
-      .footer__contact {
-        justify-content: center;
-        align-items: center;
-      }
-    }
+    }   
   }
 }

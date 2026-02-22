@@ -1,9 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpErrorResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiError, ProductResponse } from './models/api.models';
@@ -18,20 +14,12 @@ export class KitsooneApiService {
   private readonly baseUrl =
     'https://tb3ccmgnq5wmqasv7xbfil6w7q0rioau.lambda-url.us-east-2.on.aws';
 
-  private get headers(): HttpHeaders {
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-  }
-
   /**
    * Get all products
    */
   public getProducts(): Observable<ProductResponse[]> {
     return this.http
-      .get<ProductResponse[]>(`${this.baseUrl}/api/products`, {
-        headers: this.headers,
-      })
+      .get<ProductResponse[]>(`${this.baseUrl}/api/products`)
       .pipe(
         map((response) => {
           if (Array.isArray(response)) {

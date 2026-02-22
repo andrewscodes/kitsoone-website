@@ -81,6 +81,10 @@
       justify-content: center;
       align-items: center;
       width: auto;
+
+      :hover {
+        cursor: pointer;
+      }
     }
 
     swiper-pagination{
