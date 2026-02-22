@@ -86,6 +86,11 @@
     swiper-pagination{
       bottom: auto;
     }
+
+    .pi-spinner {
+      font-size: 3rem;
+      color: var(--primary-accent);
+    }
   }
 
   &__community-section {

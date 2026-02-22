@@ -7,7 +7,6 @@ import {
   ViewChild,
   ElementRef,
   PLATFORM_ID,
-  afterNextRender,
 } from '@angular/core';
 import { TagModule } from 'primeng/tag';
 import { ImageModule } from 'primeng/image';
@@ -34,20 +33,22 @@ export class HomeComponent {
   public productsSwiperRef?: ElementRef;
   @ViewChild('showcaseSwiper', { static: false })
   public showcaseSwiperRef?: ElementRef;
+  private readonly platform = inject(PLATFORM_ID);
   private readonly apiService = inject(KitsooneApiService);
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly platformId = inject(PLATFORM_ID);
   protected readonly discordUrl = DISCORD_URL;
   protected products: ProductResponse[] = [];
   protected showcase!: ShowcaseItem[];
-  protected showNavigators = false;
   protected isLoadingProducts = false;
   protected productsError: string | null = null;
 
   constructor() {
-    afterNextRender(() => {
+    if (isPlatformBrowser(this.platform)) {
       this.loadProducts();
-    });
+      requestAnimationFrame(() => {
+        this.initializeShowcaseSwiper();
+      });
+    }
 
     // Keep showcase as static data for now
     this.showcase = [
@@ -68,39 +69,7 @@ export class HomeComponent {
         image: 'assets/images/showcase4.jpg',
       },
     ];
-
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => this.initializeShowcaseSwiper(), 300);
-    }
   }
-
-  // public ngOnInit(): void {
-  //   this.loadProducts();
-
-  //   // Keep showcase as static data for now
-  //   this.showcase = [
-  //     {
-  //       id: '1',
-  //       image: 'assets/images/showcase1.jpg',
-  //     },
-  //     {
-  //       id: '2',
-  //       image: 'assets/images/showcase2.jpg',
-  //     },
-  //     {
-  //       id: '3',
-  //       image: 'assets/images/showcase3.jpg',
-  //     },
-  //     {
-  //       id: '4',
-  //       image: 'assets/images/showcase4.jpg',
-  //     },
-  //   ];
-
-  //   if (isPlatformBrowser(this.platformId)) {
-  //     setTimeout(() => this.initializeShowcaseSwiper(), 300);
-  //   }
-  // }
 
   private initializeProductsSwiper(): void {
     try {
@@ -164,7 +133,7 @@ export class HomeComponent {
     }
   }
 
-  private loadProducts(): void {
+  private async loadProducts(): Promise<void> {
     this.isLoadingProducts = true;
     this.productsError = null;
 
@@ -174,18 +143,14 @@ export class HomeComponent {
         this.isLoadingProducts = false;
         this.cdr.markForCheck();
 
-        // Initialize swiper after a short delay to ensure DOM is ready
-        if (isPlatformBrowser(this.platformId)) {
-          setTimeout(() => this.initializeProductsSwiper(), 300);
-        }
+        requestAnimationFrame(() => {
+          this.initializeProductsSwiper();
+        });
       },
       error: (error) => {
         console.error('Failed to load products:', error);
         this.productsError = error.message || 'Failed to load products';
         this.isLoadingProducts = false;
-
-        // Fallback to demo data if API fails
-        this.products = [];
         this.cdr.markForCheck();
       },
     });
