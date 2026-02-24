@@ -19,6 +19,7 @@ import {
   ProductResponse,
   ShowcaseItem,
 } from '../../service';
+import { SHOWCASE_ITEMS } from '../../constants/product.constants';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +40,7 @@ export class HomeComponent {
   private readonly cdr = inject(ChangeDetectorRef);
   protected readonly discordUrl = DISCORD_URL;
   protected products: ProductResponse[] = [];
-  protected showcase!: ShowcaseItem[];
+  protected showcase: ShowcaseItem[] = SHOWCASE_ITEMS;
   protected isLoadingProducts = false;
   protected productsError: string | null = null;
 
@@ -50,26 +51,6 @@ export class HomeComponent {
         this.initializeShowcaseSwiper();
       });
     });
-
-    // Keep showcase as static data for now
-    this.showcase = [
-      {
-        id: '1',
-        image: 'assets/images/showcase1.jpg',
-      },
-      {
-        id: '2',
-        image: 'assets/images/showcase2.jpg',
-      },
-      {
-        id: '3',
-        image: 'assets/images/showcase3.jpg',
-      },
-      {
-        id: '4',
-        image: 'assets/images/showcase4.jpg',
-      },
-    ];
   }
 
   private initializeProductsSwiper(): void {

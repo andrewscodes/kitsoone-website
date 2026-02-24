@@ -13,23 +13,21 @@
   </div>
   <div class="home__products-container page-width">
     <h2>Nuevos Productos</h2>
-    <div class="home__products-container-list">
-      <!-- Loading state -->
+    <div class="home__products-container-list">    
+
       @if (isLoadingProducts) {
         <div class="text-center p-4">
           <i class="pi pi-spin pi-spinner"></i>          
         </div>
       }
-      
-      <!-- Error state -->
+            
       @if (productsError && !isLoadingProducts) {
         <div class="text-center p-4 text-red-500">
           <i class="pi pi-exclamation-triangle text-2xl"></i>
           <p class="mt-2">{{ productsError }}</p>
         </div>
       }
-
-      <!-- Products carousel -->  
+      
       @if (!isLoadingProducts) {           
         <swiper-container #productsSwiper init="false">             
           @for (product of products; track product.id) {
