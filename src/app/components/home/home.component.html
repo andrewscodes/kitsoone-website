@@ -34,17 +34,16 @@
         <swiper-container #productsSwiper init="false">             
           @for (product of products; track product.id) {
             <swiper-slide>
-                <div class="border-surface">
-                    <div class="mb-2">
-                        <div class="relative mx-auto">
-                            <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />                         
-                        </div>
-                    </div>
-                    <div class="font-medium">{{ product.name || 'Product Name' }}</div>
-                    <div class="flex justify-between items-center">
-                        <div class="mt-0 font-semibold text-lg">${{ product.price | number:'1.0-0':'es' }}</div>                     
-                    </div>
-                </div>                
+              <div class="border-surface home__products-container-card">
+                <div class="relative mx-auto  home__products-container-media">                    
+                  <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />
+                  <button type="button" class="home__products-container-options">Ver detalle</button>                    
+                </div>
+                <div class="font-medium">{{ product.name || 'Product Name' }}</div>
+                <div class="flex justify-between items-center">
+                    <div class="mt-0 font-semibold text-lg">${{ product.price | number:'1.0-0':'es' }}</div>                     
+                </div>
+              </div>                
             </swiper-slide>
           }         
         </swiper-container>  
@@ -73,5 +72,4 @@
     </swiper-container>    
     <swiper-pagination class="swiper-showcase"/>
   </div>
-  
 </section>

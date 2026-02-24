@@ -2,6 +2,8 @@ import { provideZoneChangeDetection } from '@angular/core';
 import {
   bootstrapApplication,
   BootstrapContext,
+  provideClientHydration,
+  withNoHttpTransferCache,
 } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { config } from './app/app.config.server';
@@ -17,7 +19,11 @@ const bootstrap = (
     AppComponent,
     {
       ...config,
-      providers: [provideZoneChangeDetection(), ...config.providers],
+      providers: [
+        provideZoneChangeDetection(),
+        provideClientHydration(withNoHttpTransferCache()),
+        ...config.providers,
+      ],
     },
     context,
   );

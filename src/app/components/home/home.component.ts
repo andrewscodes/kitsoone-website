@@ -7,10 +7,11 @@ import {
   ViewChild,
   ElementRef,
   PLATFORM_ID,
+  afterNextRender,
 } from '@angular/core';
 import { TagModule } from 'primeng/tag';
 import { ImageModule } from 'primeng/image';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { DISCORD_URL } from '../../constants';
 import {
@@ -43,12 +44,12 @@ export class HomeComponent {
   protected productsError: string | null = null;
 
   constructor() {
-    if (isPlatformBrowser(this.platform)) {
+    afterNextRender(() => {
       this.loadProducts();
       requestAnimationFrame(() => {
         this.initializeShowcaseSwiper();
       });
-    }
+    });
 
     // Keep showcase as static data for now
     this.showcase = [
@@ -136,6 +137,7 @@ export class HomeComponent {
   private async loadProducts(): Promise<void> {
     this.isLoadingProducts = true;
     this.productsError = null;
+    this.cdr.markForCheck();
 
     this.apiService.getProducts().subscribe({
       next: async (products) => {
