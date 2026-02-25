@@ -12,15 +12,26 @@
     </div>
   </div>
   <div class="home__products-container page-width">
-    <h2>Nuevos Productos</h2>
-    <div class="home__products-container-list">    
-
+    <h2>Nuevos Productos</h2>    
+    <div class="home__products-container-list"> 
+      
       @if (isLoadingProducts) {
-        <div class="text-center p-4">
-          <i class="pi pi-spin pi-spinner"></i>          
-        </div>
+          <swiper-container #productsSwiper init="false">             
+            @for (i of productsSkeletonSlides; track i) {
+              <swiper-slide class="home__products-container-slide">   
+                <div class="border-surface home__products-container-card home__products-container-skeleton-item">
+                  <div class="relative mx-auto  home__products-container-media">                    
+                    <p-skeleton class = "mb-3 w-full"width="100%" height="25vh"/>                 
+                  </div>                  
+                  <p-skeleton width="100%" class="mb-2" />
+                  <p-skeleton width="30%" class="mb-2" />
+                  <p-skeleton width="50%" class="mb-2" /> 
+                </div>                             
+              </swiper-slide>            
+            }         
+          </swiper-container>  
       }
-            
+
       @if (productsError && !isLoadingProducts) {
         <div class="text-center p-4 text-red-500">
           <i class="pi pi-exclamation-triangle text-2xl"></i>
@@ -31,7 +42,7 @@
       @if (!isLoadingProducts) {           
         <swiper-container #productsSwiper init="false">             
           @for (product of products; track product.id) {
-            <swiper-slide>
+            <swiper-slide class="home__products-container-slide">
               <div class="border-surface home__products-container-card">
                 <div class="relative mx-auto  home__products-container-media">                    
                   <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />

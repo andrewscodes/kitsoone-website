@@ -16,3 +16,5 @@ export const SHOWCASE_ITEMS = [
     image: 'assets/images/showcase4.jpg',
   },
 ];
+
+export const SKELETON_SLIDES = [0, 1, 2, 3];

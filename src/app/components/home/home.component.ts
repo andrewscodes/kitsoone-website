@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { TagModule } from 'primeng/tag';
 import { ImageModule } from 'primeng/image';
+import { SkeletonModule } from 'primeng/skeleton';
 import { CommonModule } from '@angular/common';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { DISCORD_URL } from '../../constants';
@@ -19,13 +20,22 @@ import {
   ProductResponse,
   ShowcaseItem,
 } from '../../service';
-import { SHOWCASE_ITEMS } from '../../constants/product.constants';
+import {
+  SHOWCASE_ITEMS,
+  SKELETON_SLIDES,
+} from '../../constants/product.constants';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kitsoone-home',
   standalone: true,
-  imports: [CommonModule, TagModule, ImageModule, AutoFocusModule],
+  imports: [
+    CommonModule,
+    TagModule,
+    ImageModule,
+    AutoFocusModule,
+    SkeletonModule,
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -40,6 +50,7 @@ export class HomeComponent {
   private readonly cdr = inject(ChangeDetectorRef);
   protected readonly discordUrl = DISCORD_URL;
   protected products: ProductResponse[] = [];
+  protected productsSkeletonSlides = SKELETON_SLIDES;
   protected showcase: ShowcaseItem[] = SHOWCASE_ITEMS;
   protected isLoadingProducts = false;
   protected productsError: string | null = null;
@@ -119,6 +130,10 @@ export class HomeComponent {
     this.isLoadingProducts = true;
     this.productsError = null;
     this.cdr.markForCheck();
+
+    requestAnimationFrame(() => {
+      this.initializeProductsSwiper();
+    });
 
     this.apiService.getProducts().subscribe({
       next: async (products) => {
