@@ -2,35 +2,35 @@
   <div class="products__header">
     <h1>Todos los Productos</h1>
   </div>
+  
+  <p-drawer [(visible)]="isFiltersOpen" header="Filtros" position="left">
+    <kitsoone-products-filters
+      [categories]="categories"
+      [(selectedCategories)]="selectedCategories"
+      idPrefix="drawer-"
+    />
+  </p-drawer>
 
   <div class="products__container">
-    <aside class="products__sidebar">
-      <p-accordion value = "0">
-        <p-accordion-panel value = "0">
-          <p-accordion-header>
-            <h4 class="products__filter-title">Tipo de Producto</h4>
-          </p-accordion-header>
-          <p-accordion-content>
-            <div class="flex flex-col gap-4">
-                @for (category of categories; track category.label) {
-                  <div class="flex items-center">
-                    <p-checkbox [inputId]="category.label" name="group" [value]="category" [(ngModel)]="selectedCategories" />
-                    <label [for]="category.label" class="ml-2"> {{ category.value }} </label>
-                  </div>
-                }
-            </div>
-          </p-accordion-content>
-        </p-accordion-panel>
-      </p-accordion>      
+    <aside class="products__container-filters">
+      <kitsoone-products-filters
+        [categories]="categories"
+        [(selectedCategories)]="selectedCategories"
+        idPrefix="aside-"
+      />
     </aside>
+    
+    <div class="products__main">      
+      <!-- Mobile filter button -->
+      <div class="md:hidden mb-4">
+        <button type="button" (click)="isFiltersOpen = true" class="flex items-center gap-2 px-4 py-2">
+          <i class="pi pi-sliders-h"></i> Filtros
+        </button>
+      </div>
 
-    <!-- Main Content Area -->
-    <div class="products__main">
-      <!-- Loading state -->
       @if (isLoadingProducts) {
         <div class="products__loading">
-          <i class="pi pi-spin pi-spinner text-2xl"></i>
-          <p class="mt-2">Cargando productos...</p>
+          <i class="pi pi-spin pi-spinner text-2xl"></i>        
         </div>
       }
 
@@ -43,27 +43,57 @@
       }
 
       <!-- Products grid -->
-      @if (!isLoadingProducts && !productsError) {          
-        @for (product of filteredProducts; track product.id) {                     
-          <div class="border border-surface rounded-border m-2 p-4">
-              <div class="mb-4">
-                  <div class="relative mx-auto">
-                      <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />                         
-                  </div>
-              </div>
-              <div class="mb-4 font-medium">{{ product.name || 'Product Name' }}</div>
-              <div class="flex justify-between items-center">
-                  <div class="mt-0 font-semibold text-xl">${{ product.price ? product.price.toFixed(2) : '0.00' }}</div>                     
-              </div>
-          </div>                          
-      }          
-
-        <!-- No results message -->
-        @if (filteredProducts.length === 0) {
-          <div class="products__no-results">
-            <p>No se encontraron productos para este filtro.</p>
+      @if (!isLoadingProducts && !productsError) {   
+      <p-dataview 
+        [value]="allProducts" 
+        [paginator]="true" 
+        [totalRecords]="allProducts.length" 
+        [rows]="10"
+        [layout]="layout">
+        <ng-template #header class="mg-10">
+          <div class="flex justify-end">
+            <p-selectbutton [(ngModel)]="layout" [options]="layoutOptions" optionValue="value" [allowEmpty]="false">
+              <ng-template #item let-item>
+                <i [class]="item.icon"></i>
+              </ng-template>
+            </p-selectbutton>
           </div>
-        }
+        </ng-template>
+        <ng-template #list let-items>
+          <div class="flex flex-col gap-4 mb-10">
+            @for (product of items; track product.id) {
+            <div class="flex gap-4 items-center border-surface home__products-container-card">
+              <div class="home__products-container-media shrink-0">
+                <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />
+              </div>
+              <div>
+                <div class="font-medium">{{ product.name || 'Product Name' }}</div>
+                <div class="font-semibold text-lg mt-1">${{ product.price | number:'1.0-0':'es' }}</div>
+                <button type="button" class="home__products-container-options mt-2">Ver detalle</button>
+              </div>
+            </div>
+            }
+          </div>
+        </ng-template>
+        <ng-template #grid let-items>
+          <div class="grid grid-cols-12 gap-8 mb-10">
+            @for (product of items; track product.id) {
+            <div class="col-span-6 md:col-span-4 lg:col-span-3">
+              <div class="border-surface home__products-container-card">
+                <div class="relative mx-auto home__products-container-media">                    
+                  <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />
+                  <button type="button" class="home__products-container-options">Ver detalle</button>                    
+                </div>
+                <div class="font-medium mt-2">{{ product.name || 'Product Name' }}</div>
+                <div class="flex justify-between items-center">
+                  <div class="mt-0 font-semibold text-lg">${{ product.price | number:'1.0-0':'es' }}</div>                     
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </ng-template>
+      </p-dataview>       
       }
     </div>
   </div>

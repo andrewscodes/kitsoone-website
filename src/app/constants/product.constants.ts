@@ -17,4 +17,4 @@ export const SHOWCASE_ITEMS = [
   },
 ];
 
-export const SKELETON_SLIDES = [0, 1, 2, 3];
+export const SKELETON_SLIDES = [0, 1, 2, 3, 4, 5, 6, 7, 8];

@@ -1,17 +1,19 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  OnInit,
   inject,
   ChangeDetectorRef,
   CUSTOM_ELEMENTS_SCHEMA,
+  afterNextRender,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { KitsooneApiService, ProductResponse } from '../../service';
 import { RouterModule } from '@angular/router';
-import { AccordionModule } from 'primeng/accordion';
-import { CheckboxModule } from 'primeng/checkbox';
+import { DataViewModule } from 'primeng/dataview';
+import { DrawerModule } from 'primeng/drawer';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ProductsFiltersComponent } from './products-filters/products-filters.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,44 +23,51 @@ import { CheckboxModule } from 'primeng/checkbox';
     CommonModule,
     FormsModule,
     RouterModule,
-    AccordionModule,
-    CheckboxModule,
+    DataViewModule,
+    DrawerModule,
+    SelectButtonModule,
+    ProductsFiltersComponent,
   ],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent {
   private readonly apiService = inject(KitsooneApiService);
   private readonly cdr = inject(ChangeDetectorRef);
 
   protected allProducts: ProductResponse[] = [];
-  protected filteredProducts: ProductResponse[] = [];
+  protected filteredProducts: ProductResponse[] = this.allProducts;
   protected categories = [
     { label: 'Teclados', value: 'keyboards' },
     { label: 'Accesorios', value: 'accessories' },
   ];
 
-  protected selectedCategories: any[] = [];
+  protected selectedCategories: string[] = [];
 
+  protected isFiltersOpen = false;
+  protected layout: 'list' | 'grid' = 'grid';
+  protected layoutOptions = [
+    { icon: 'pi pi-bars', value: 'list' },
+    { icon: 'pi pi-table', value: 'grid' },
+  ];
   protected isLoadingProducts = false;
   protected productsError: string | null = null;
 
-  protected selectedFilter = 'all';
-
-  public ngOnInit(): void {
-    this.loadProducts();
-    this.selectedCategories = [];
+  constructor() {
+    afterNextRender(() => {
+      this.loadProducts();
+    });
   }
 
-  private loadProducts(): void {
+  private async loadProducts(): Promise<void> {
     this.isLoadingProducts = true;
     this.productsError = null;
+    this.cdr.markForCheck();
 
     this.apiService.getProducts().subscribe({
-      next: (products) => {
+      next: async (products) => {
         this.allProducts = products;
-        this.filteredProducts = products;
         this.isLoadingProducts = false;
         this.cdr.markForCheck();
       },
@@ -66,33 +75,12 @@ export class ProductsComponent implements OnInit {
         console.error('Failed to load products:', error);
         this.productsError = error.message || 'Failed to load products';
         this.isLoadingProducts = false;
-        this.allProducts = [];
-        this.filteredProducts = [];
         this.cdr.markForCheck();
       },
     });
   }
 
   protected onFilterChange(): void {
-    if (this.selectedFilter === 'all') {
-      this.filteredProducts = this.allProducts;
-    } else {
-      this.filteredProducts = this.allProducts.filter((product) =>
-        this.selectedFilter === 'keyboards'
-          ? this.isKeyboard(product)
-          : this.isAccessory(product),
-      );
-    }
     this.cdr.markForCheck();
-  }
-
-  private isKeyboard(product: ProductResponse): boolean {
-    const keyboardKeywords = ['keyboard', 'teclado'];
-    const productName = product.name.toLowerCase();
-    return keyboardKeywords.some((keyword) => productName.includes(keyword));
-  }
-
-  private isAccessory(product: ProductResponse): boolean {
-    return !this.isKeyboard(product);
   }
 }

@@ -1,0 +1,32 @@
+<p-accordion value="0">
+  <p-accordion-panel value="0">
+    <p-accordion-header>
+      <h4 class="filters__title">Categoría</h4>
+    </p-accordion-header>
+    <p-accordion-content>
+      <div class="flex flex-col gap-4">
+        @for (category of categories; track category.label) {
+          <div class="flex items-center">
+            <p-checkbox [inputId]="idPrefix + category.label" name="group" [value]="category" [ngModel]="selectedCategories" (ngModelChange)="selectedCategoriesChange.emit($event)" />
+            <label [for]="idPrefix + category.label" class="ml-2"> {{ category.value }} </label>
+          </div>
+        }
+      </div>
+    </p-accordion-content>
+  </p-accordion-panel>
+  <p-accordion-panel value="1">
+    <p-accordion-header>
+      <h4 class="filters__title">Conectividad</h4>
+    </p-accordion-header>
+    <p-accordion-content>
+      <div class="flex flex-col gap-4">
+        @for (category of categories; track category.label) {
+          <div class="flex items-center">
+            <p-checkbox [inputId]="idPrefix + 'conn-' + category.label" name="group2" [value]="category" [ngModel]="selectedCategories" (ngModelChange)="selectedCategoriesChange.emit($event)" />
+            <label [for]="idPrefix + 'conn-' + category.label" class="ml-2"> {{ category.value }} </label>
+          </div>
+        }
+      </div>
+    </p-accordion-content>
+  </p-accordion-panel>
+</p-accordion>
