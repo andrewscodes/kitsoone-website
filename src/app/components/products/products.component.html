@@ -21,13 +21,6 @@
     </aside>
     
     <div class="products__main">      
-      <!-- Mobile filter button -->
-      <div class="md:hidden mb-4">
-        <button type="button" (click)="isFiltersOpen = true" class="flex items-center gap-2 px-4 py-2">
-          <i class="pi pi-sliders-h"></i> Filtros
-        </button>
-      </div>
-
       @if (isLoadingProducts) {
         <div class="products__loading">
           <i class="pi pi-spin pi-spinner text-2xl"></i>        
@@ -50,21 +43,29 @@
         [totalRecords]="allProducts.length" 
         [rows]="10"
         [layout]="layout">
-        <ng-template #header class="mg-10">
-          <div class="flex justify-end">
-            <p-selectbutton [(ngModel)]="layout" [options]="layoutOptions" optionValue="value" [allowEmpty]="false">
-              <ng-template #item let-item>
-                <i [class]="item.icon"></i>
-              </ng-template>
-            </p-selectbutton>
+        <ng-template #header>
+          <div class="flex justify-between items-center">
+            <button
+              type="button"
+              (click)="isFiltersOpen = true"
+              class="flex md:hidden items-center gap-2 px-4 py-2">
+              <i class="pi pi-sliders-h"></i> Filtros
+            </button>
+            <div class="flex justify-end flex-1">
+              <p-selectbutton [(ngModel)]="layout" [options]="layoutOptions" optionValue="value" [allowEmpty]="false">
+                <ng-template #item let-item>
+                  <i [class]="item.icon"></i>
+                </ng-template>
+              </p-selectbutton>
+            </div>
           </div>
         </ng-template>
         <ng-template #list let-items>
           <div class="flex flex-col gap-4 mb-10">
             @for (product of items; track product.id) {
             <div class="flex gap-4 items-center border-surface home__products-container-card">
-              <div class="home__products-container-media shrink-0">
-                <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />
+              <div class="shrink-0 w-40 h-40">
+                <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover rounded-border" />
               </div>
               <div>
                 <div class="font-medium">{{ product.name || 'Product Name' }}</div>
