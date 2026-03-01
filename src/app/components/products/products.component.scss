@@ -11,6 +11,11 @@
       font-size: 2rem;
       font-weight: 600;
     }
+
+    @media (max-width: 768px) {
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+    }
   }
 
   &__container {
@@ -31,6 +36,7 @@
 
   &__main {
     --p-dataview-header-border-width: 0;
+    --p-dataview-header-padding: 12px 0;
     --p-dataview-paginator-bottom-border-width: 0;
     --p-togglebutton-color: var(--text-color-dark);
     --p-togglebutton-checked-background: var(--background-color-gray);
