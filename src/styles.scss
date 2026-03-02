@@ -1,6 +1,7 @@
 @use "primeicons/primeicons.css";
 @use './tailwind.css';
 @use './themes.scss';
+@use 'breakpoints' as breakpoints;
 /* Import Swiper styles */
 @use 'swiper/css';
 @use 'swiper/css/pagination';
@@ -36,11 +37,11 @@ body {
     margin: 0 auto;
     padding: 0 3rem;
 
-    @media (max-width: 950px) {
+    @media (max-width: breakpoints.$lg) {
       padding: 0 2rem;
     }
 
-    @media (max-width: 550px) {
+    @media (max-width: breakpoints.$sm) {
       padding: 0 1rem;
     }
 }

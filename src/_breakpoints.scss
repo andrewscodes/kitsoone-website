@@ -1,0 +1,7 @@
+// Global breakpoints
+// Usage: @use 'breakpoints' as breakpoints;
+// Then:  @media (max-width: #{breakpoints.$sm}) { ... }
+
+$sm: 640px;   // small  — phones
+$md: 768px;   // medium — tablets
+$lg: 950px;   // large  — desktop

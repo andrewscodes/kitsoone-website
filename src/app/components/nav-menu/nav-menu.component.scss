@@ -1,3 +1,5 @@
+@use 'breakpoints' as breakpoints;
+
 .navbar {
   background: var(--background-color-light);
   position: sticky;
@@ -74,7 +76,7 @@
   }
 }
 
-@media (max-width: 950px) {
+@media (max-width: breakpoints.$lg) {
   .navbar {    
 
     &__content {
@@ -189,7 +191,7 @@
     }
   }
 
-  @media (max-width: 950px) {
+  @media (max-width: breakpoints.$lg) {
     .navbar {
       &__menu{
         &-social-links a:hover .pi {

@@ -1,3 +1,5 @@
+@use 'breakpoints' as breakpoints;
+
 .announcement-bar {
   background-color: var(--primary-accent);
   box-sizing: border-box;
@@ -5,7 +7,7 @@
   align-items: center;
   font-size: 14px;
   min-height: 35px;  
-  @media (max-width: 950px) {
+  @media (max-width: breakpoints.$lg) {
       display: none;
     }
 
