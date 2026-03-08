@@ -19,8 +19,8 @@
           <swiper-container #productsSwiper init="false">             
             @for (i of productsSkeletonSlides; track i) {
               <swiper-slide class="home__products-container-slide">   
-                <div class="border-surface home__products-container-card home__products-container-skeleton-item">
-                  <div class="relative mx-auto  home__products-container-media">                    
+                <div class="border-surface product-card home__products-container-skeleton-item">
+                  <div class="relative mx-auto product-card__media">                    
                     <p-skeleton class = "mb-3 w-full"width="100%" height="25vh"/>                 
                   </div>                  
                   <p-skeleton width="100%" class="mb-2" />
@@ -43,10 +43,10 @@
         <swiper-container #productsSwiper init="false">             
           @for (product of products; track product.id) {
             <swiper-slide class="home__products-container-slide">
-              <div class="border-surface home__products-container-card">
-                <div class="relative mx-auto  home__products-container-media">                    
+              <div class="border-surface product-card">
+                <div class="relative mx-auto product-card__media">                    
                   <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />
-                  <button type="button" class="home__products-container-options hidden lg:block">Ver detalle</button>                    
+                  <button type="button" class="product-card__options hidden lg:block">Ver detalle</button>                    
                 </div>
                 <div class="font-medium mt-2">{{ product.name || 'Product Name' }}</div>
                 <div class="flex justify-between items-center">

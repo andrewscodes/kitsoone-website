@@ -1,0 +1,36 @@
+.product-card {
+  cursor: pointer;
+
+  &__media {
+    position: relative;
+  }
+
+  &__options {
+    position: absolute;
+    left: 50%;
+    bottom: 0.6rem;
+    transform: translate(-50%, 8px);
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.7rem;
+    width: 90%;
+    font-weight: 500;
+    background: var(--background-color-light);
+    color: var(--text-color-dark);
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--primary-accent);
+      color: var(--text-color-light);
+    }
+  }
+
+  &:hover &__options {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+  }
+}
