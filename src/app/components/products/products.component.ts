@@ -41,12 +41,6 @@ export class ProductsComponent {
 
   protected allProducts: ProductResponse[] = [];
   protected filteredProducts: ProductResponse[] = this.allProducts;
-  protected categories = [
-    { label: 'Teclados', value: 'keyboards' },
-    { label: 'Accesorios', value: 'accessories' },
-  ];
-
-  protected selectedCategories: string[] = [];
 
   protected isFiltersOpen = false;
   protected skeletonItems = SKELETON_ITEMS;

@@ -5,8 +5,7 @@
   
   <p-drawer [(visible)]="isFiltersOpen" header="Filtros" position="left">
     <kitsoone-products-filters
-      [categories]="categories"
-      [(selectedCategories)]="selectedCategories"
+      ngSkipHydration
       idPrefix="drawer-"
     />
   </p-drawer>
@@ -14,8 +13,7 @@
   <div class="products__container">
     <aside class="products__container-filters">
       <kitsoone-products-filters
-        [categories]="categories"
-        [(selectedCategories)]="selectedCategories"
+        ngSkipHydration
         idPrefix="aside-"
       />
     </aside>
