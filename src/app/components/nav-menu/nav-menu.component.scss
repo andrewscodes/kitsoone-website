@@ -46,6 +46,7 @@
         font-size: 1rem;
         font-weight: 500;    
         height: var(--menu-height);
+        position: relative;
       }
     }
 
@@ -183,12 +184,26 @@
 
 @media(hover:hover){
   .navbar {
+    &__menu-options li {
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background: var(--primary-accent);
+        transition: width 0.1s ease;
+      }
+    }
+
     &__menu-options li:hover {
       color: var(--primary-accent);
-      text-decoration: underline;
-      text-decoration-color: var(--primary-accent);
-      text-underline-offset: 8px;
-      text-decoration-thickness: 2px;
+
+      &::after {
+        width: 100%;
+      }
     }
     
     .navbar-button {             
@@ -212,10 +227,10 @@
         }
         
       }
-    }   
+    }
 
-    .navbar__menu-options li:hover {
-      text-decoration: none;
+    .navbar__menu-options li::after {
+      display: none;
     }
   }
 }
