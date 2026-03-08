@@ -146,20 +146,27 @@
       gap: 0.5rem;
     }
 
+    &__overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--transparent-black-strong);
+      z-index: 999;
+    }
+
     &__sidebar {
       display: flex;
       position: fixed;
       margin: auto;
-      top: 0;
+      top: calc(var(--menu-height) + 1px);
       right: 0;
+      bottom: 0;
       width: 80%;
-      height: 100%;      
       background: var(--background-color-light);
       flex-direction: column;
-      z-index: -1;
+      z-index: 999;
       animation: slideInRight 0.3s ease-in-out;
       box-sizing: border-box;
-      padding-top: calc(var(--menu-height) + 1rem);
+      padding-top: 1rem;
       overflow: hidden;       
     }
       

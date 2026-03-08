@@ -1,10 +1,13 @@
+@if (isSidebarMenuOpen) {
+  <div class="navbar__overlay" (click)="toggleMenu()"></div>
+}
 <nav class="navbar">
   <div class="navbar__content page-width">
     <button class="navbar__logo" (click)="onLogoClick()" aria-label="Go to homepage">
       <img src="assets/images/kitsoone_logo.png" alt="kitsoone Logo"/>
     </button>
 
-    <ul class="navbar__menu" [class.navbar__sidebar]="isSidebarMenuOpen">
+    <ul class="navbar__menu" [class.navbar__sidebar]="isSidebarMenuOpen" (click)="$event.stopPropagation()">
       <div class="navbar__menu-options">
         <li (click)="onProductsItemClick(); $event.stopPropagation()">Productos</li>
         <li (click)="onMenuItemClick(); $event.stopPropagation()">Guias</li>

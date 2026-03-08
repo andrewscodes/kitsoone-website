@@ -58,6 +58,11 @@ export class ProductsComponent {
     });
   }
 
+  protected onFiltersVisibleChange(value: boolean): void {
+    this.isFiltersOpen = value;
+    this.cdr.markForCheck();
+  }
+
   private async loadProducts(): Promise<void> {
     this.isLoadingProducts = true;
     this.productsError = null;
