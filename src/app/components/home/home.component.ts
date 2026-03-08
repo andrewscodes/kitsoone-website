@@ -22,7 +22,7 @@ import {
 } from '../../service';
 import {
   SHOWCASE_ITEMS,
-  SKELETON_SLIDES,
+  SKELETON_ITEMS,
 } from '../../constants/product.constants';
 
 @Component({
@@ -50,7 +50,7 @@ export class HomeComponent {
   private readonly cdr = inject(ChangeDetectorRef);
   protected readonly discordUrl = DISCORD_URL;
   protected products: ProductResponse[] = [];
-  protected productsSkeletonSlides = SKELETON_SLIDES;
+  protected productsSkeletonSlides = SKELETON_ITEMS;
   protected showcase: ShowcaseItem[] = SHOWCASE_ITEMS;
   protected isLoadingProducts = false;
   protected productsError: string | null = null;

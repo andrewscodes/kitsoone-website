@@ -13,7 +13,9 @@ import { RouterModule } from '@angular/router';
 import { DataViewModule } from 'primeng/dataview';
 import { DrawerModule } from 'primeng/drawer';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { SkeletonModule } from 'primeng/skeleton';
 import { ProductsFiltersComponent } from './products-filters/products-filters.component';
+import { SKELETON_ITEMS } from '../../constants/product.constants';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,6 +28,7 @@ import { ProductsFiltersComponent } from './products-filters/products-filters.co
     DataViewModule,
     DrawerModule,
     SelectButtonModule,
+    SkeletonModule,
     ProductsFiltersComponent,
   ],
   templateUrl: './products.component.html',
@@ -46,6 +49,7 @@ export class ProductsComponent {
   protected selectedCategories: string[] = [];
 
   protected isFiltersOpen = false;
+  protected skeletonItems = SKELETON_ITEMS;
   protected layout: 'list' | 'grid' = 'grid';
   protected layoutOptions = [
     { icon: 'pi pi-bars', value: 'list' },
