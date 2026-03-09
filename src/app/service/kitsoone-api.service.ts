@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { ApiError, ProductResponse } from './models/api.models';
+import { catchError } from 'rxjs/operators';
+import { ApiError, ProductListResponse } from './models/api.models';
 
 @Injectable({
   providedIn: 'root',
@@ -17,22 +17,10 @@ export class KitsooneApiService {
   /**
    * Get all products
    */
-  public getProducts(): Observable<ProductResponse[]> {
+  public getProducts(): Observable<ProductListResponse> {
     return this.http
-      .get<ProductResponse[]>(`${this.baseUrl}/api/products`)
-      .pipe(
-        map((response) => {
-          if (Array.isArray(response)) {
-            return response;
-          }
-          // If response is wrapped in ApiResponse format
-          if (response && typeof response === 'object' && 'data' in response) {
-            return (response as { data: ProductResponse[] }).data || [];
-          }
-          return [];
-        }),
-        catchError(this.handleError),
-      );
+      .get<ProductListResponse>(`${this.baseUrl}/api/products`)
+      .pipe(catchError(this.handleError));
   }
 
   /**

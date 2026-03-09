@@ -136,8 +136,8 @@ export class HomeComponent {
     });
 
     this.apiService.getProducts().subscribe({
-      next: async (products) => {
-        this.products = products;
+      next: async (response) => {
+        this.products = response.products;
         this.isLoadingProducts = false;
         this.cdr.markForCheck();
 

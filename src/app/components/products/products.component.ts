@@ -69,8 +69,8 @@ export class ProductsComponent {
     this.cdr.markForCheck();
 
     this.apiService.getProducts().subscribe({
-      next: async (products) => {
-        this.allProducts = products;
+      next: async (response) => {
+        this.allProducts = response.products;
         this.isLoadingProducts = false;
         this.cdr.markForCheck();
       },

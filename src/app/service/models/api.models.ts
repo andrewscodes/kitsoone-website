@@ -7,6 +7,63 @@ export interface ApiResponse<T = unknown> {
   error?: string;
 }
 
+export interface SelectedOptionResponse {
+  optionName: string;
+  value: string;
+}
+
+export interface ProductOptionValueResponse {
+  id: string;
+  value: string;
+  priceModifier: number;
+  displayOrder: number;
+}
+
+export interface ProductOptionResponse {
+  id: string;
+  name: string;
+  displayOrder: number;
+  values: ProductOptionValueResponse[];
+}
+
+export interface ProductAttributeResponse {
+  key: string;
+  value: string;
+}
+
+export interface ProductVariantResponse {
+  id: string;
+  sku: string;
+  price: number;
+  stockQuantity: number;
+  imageUrl: string;
+  isActive: boolean;
+  selectedOptions: SelectedOptionResponse[];
+}
+
+export interface ProductResponse {
+  id: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  description: string;
+  hasVariants: boolean;
+  attributes: ProductAttributeResponse[];
+  options: ProductOptionResponse[];
+  variants: ProductVariantResponse[];
+}
+
+export interface AvailableFiltersResponse {
+  categories: string[];
+  connectivity: string[];
+  colors: string[];
+}
+
+export interface ProductListResponse {
+  products: ProductResponse[];
+  availableFilters: AvailableFiltersResponse;
+}
+
 export interface Product {
   id: number;
   name: string;
@@ -23,14 +80,6 @@ export interface User {
   email: string;
   createdAt: Date;
   updatedAt?: Date;
-}
-
-export interface ProductResponse {
-  id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-  description: string;
 }
 
 export interface UserResponse {
