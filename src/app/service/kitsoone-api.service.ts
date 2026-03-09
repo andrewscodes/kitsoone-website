@@ -2,7 +2,11 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ApiError, ProductListResponse } from './models/api.models';
+import {
+  ApiError,
+  ProductListResponse,
+  ProductResponse,
+} from './models/api.models';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +24,12 @@ export class KitsooneApiService {
   public getProducts(): Observable<ProductListResponse> {
     return this.http
       .get<ProductListResponse>(`${this.baseUrl}/api/products`)
+      .pipe(catchError(this.handleError));
+  }
+
+  public getNewProducts(): Observable<ProductResponse[]> {
+    return this.http
+      .get<ProductResponse[]>(`${this.baseUrl}/api/products/latest`)
       .pipe(catchError(this.handleError));
   }
 

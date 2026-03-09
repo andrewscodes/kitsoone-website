@@ -135,9 +135,9 @@ export class HomeComponent {
       this.initializeProductsSwiper();
     });
 
-    this.apiService.getProducts().subscribe({
+    this.apiService.getNewProducts().subscribe({
       next: async (response) => {
-        this.products = response.products;
+        this.products = response;
         this.isLoadingProducts = false;
         this.cdr.markForCheck();
 
