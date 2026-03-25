@@ -9,12 +9,16 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { KitsooneApiService, ProductResponse } from '../../service';
+import { AvailableFiltersResponse } from '../../service/models/api.models';
 import { RouterModule } from '@angular/router';
 import { DataViewModule } from 'primeng/dataview';
 import { DrawerModule } from 'primeng/drawer';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ProductsFiltersComponent } from './products-filters/products-filters.component';
+import {
+  ProductsFiltersComponent,
+  ProductFilters,
+} from './products-filters/products-filters.component';
 import { SKELETON_ITEMS } from '../../constants/product.constants';
 
 @Component({
@@ -40,7 +44,8 @@ export class ProductsComponent {
   private readonly cdr = inject(ChangeDetectorRef);
 
   protected allProducts: ProductResponse[] = [];
-  protected filteredProducts: ProductResponse[] = this.allProducts;
+  protected filteredProducts: ProductResponse[] = [];
+  protected availableFilters: AvailableFiltersResponse | null = null;
 
   protected isFiltersOpen = false;
   protected skeletonItems = SKELETON_ITEMS;
@@ -63,14 +68,22 @@ export class ProductsComponent {
     this.cdr.markForCheck();
   }
 
-  private async loadProducts(): Promise<void> {
+  protected onFilterChange(filters: ProductFilters): void {
+    this.loadProducts(filters);
+  }
+
+  private loadProducts(filters?: ProductFilters): void {
     this.isLoadingProducts = true;
     this.productsError = null;
     this.cdr.markForCheck();
 
-    this.apiService.getProducts().subscribe({
-      next: async (response) => {
-        this.allProducts = response.products;
+    this.apiService.getProducts(filters).subscribe({
+      next: (response) => {
+        if (!filters) {
+          this.allProducts = response.products;
+          this.availableFilters = response.availableFilters;
+        }
+        this.filteredProducts = response.products;
         this.isLoadingProducts = false;
         this.cdr.markForCheck();
       },
@@ -81,9 +94,5 @@ export class ProductsComponent {
         this.cdr.markForCheck();
       },
     });
-  }
-
-  protected onFilterChange(): void {
-    this.cdr.markForCheck();
   }
 }

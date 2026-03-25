@@ -15,6 +15,10 @@ export const SHOWCASE_ITEMS = [
     id: '4',
     image: 'assets/images/showcase4.jpg',
   },
+  {
+    id: '5',
+    image: 'assets/images/showcase5.jpg',
+  },
 ];
 
 export const SKELETON_ITEMS = [0, 1, 2, 3, 4, 5, 6, 7];

@@ -3,3 +3,8 @@
   font-weight: 600;
   color: var(--text-color-dark);
 }
+
+.filters__option--disabled {
+  opacity: 0.4;
+  user-select: none;
+}

@@ -7,6 +7,9 @@
     <kitsoone-products-filters
       ngSkipHydration
       idPrefix="drawer-"
+      [availableFilters]="availableFilters"
+      [allProducts]="allProducts"
+      (filtersChange)="onFilterChange($event)"
     />
   </p-drawer>
 
@@ -15,6 +18,9 @@
       <kitsoone-products-filters
         ngSkipHydration
         idPrefix="aside-"
+        [availableFilters]="availableFilters"
+        [allProducts]="allProducts"
+        (filtersChange)="onFilterChange($event)"
       />
     </aside>
     
@@ -24,8 +30,8 @@
           @for (i of skeletonItems; track i) {
             <div class="col-span-6 md:col-span-4 lg:col-span-3">
               <div class="border-surface product-card">
-                <p-skeleton width="100%" height="200px" styleClass="mb-3" />
-                <p-skeleton width="100%" styleClass="mb-2" />
+                <p-skeleton width="100%" height="200px" class="mb-3" />
+                <p-skeleton width="100%" class="mb-2" />
                 <p-skeleton width="40%" />
               </div>
             </div>
@@ -43,10 +49,10 @@
 
       <!-- Products grid -->
       @if (!isLoadingProducts && !productsError) {   
-      <p-dataview 
-        [value]="allProducts" 
-        [paginator]="true" 
-        [totalRecords]="allProducts.length" 
+      <p-dataview
+        [value]="filteredProducts"
+        [paginator]="true"
+        [totalRecords]="filteredProducts.length"
         [rows]="10"
         [layout]="layout">
         <ng-template #header>
@@ -64,6 +70,12 @@
                 </ng-template>
               </p-selectbutton>
             </div>
+          </div>
+        </ng-template>
+        <ng-template #emptymessage>
+          <div class="products__empty">
+            <i class="pi pi-search products__empty-icon"></i>
+            <p>No se encontraron productos con los filtros seleccionados.</p>
           </div>
         </ng-template>
         <ng-template #list let-items>

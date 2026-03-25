@@ -1,5 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {
@@ -7,6 +11,12 @@ import {
   ProductListResponse,
   ProductResponse,
 } from './models/api.models';
+
+export interface ProductQueryFilters {
+  categories?: string[];
+  connectivity?: string[];
+  colors?: string[];
+}
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +31,23 @@ export class KitsooneApiService {
   /**
    * Get all products
    */
-  public getProducts(): Observable<ProductListResponse> {
+  public getProducts(
+    filters?: ProductQueryFilters,
+  ): Observable<ProductListResponse> {
+    let params = new HttpParams();
+
+    for (const category of filters?.categories ?? []) {
+      params = params.append('categories', category);
+    }
+    for (const conn of filters?.connectivity ?? []) {
+      params = params.append('connectivity', conn);
+    }
+    for (const color of filters?.colors ?? []) {
+      params = params.append('colors', color);
+    }
+
     return this.http
-      .get<ProductListResponse>(`${this.baseUrl}/api/products`)
+      .get<ProductListResponse>(`${this.baseUrl}/api/products`, { params })
       .pipe(catchError(this.handleError));
   }
 
