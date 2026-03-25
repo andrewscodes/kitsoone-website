@@ -61,6 +61,11 @@
     opacity: 0.4;
   }
 
+  &__filters{
+    --p-drawer-color: var(--text-color-dark);
+    --p-accordion-content-color: var(--text-color-dark);
+  }
+
   &__main {
     --p-dataview-header-border-width: 0;
     --p-dataview-header-padding: 12px 0;
@@ -74,7 +79,7 @@
     --p-togglebutton-hover-color: var(--text-color-dark);
     --p-togglebutton-border-color: var(--background-color-gray);
     --p-togglebutton-checked-border-color: var(--background-color-gray);
-
+    --p-drawer-color: var(--text-color-dark);
   }
 
 }

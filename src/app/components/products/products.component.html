@@ -3,7 +3,7 @@
     <h1>Todos los Productos</h1>
   </div>
   
-  <p-drawer [visible]="isFiltersOpen" (visibleChange)="onFiltersVisibleChange($event)" header="Filtros" position="left">
+  <p-drawer class="products__filters" [visible]="isFiltersOpen" (visibleChange)="onFiltersVisibleChange($event)" header="Filtros" position="left">
     <kitsoone-products-filters
       ngSkipHydration
       idPrefix="drawer-"
