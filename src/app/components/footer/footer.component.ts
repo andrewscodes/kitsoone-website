@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
@@ -10,7 +11,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kitsoone-footer',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })
