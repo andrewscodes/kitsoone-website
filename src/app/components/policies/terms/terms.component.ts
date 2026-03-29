@@ -3,10 +3,10 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'kitsoone-terms-of-service',
+  selector: 'kitsoone-terms',
   standalone: true,
   imports: [RouterModule],
-  templateUrl: './terms-of-service.component.html',
-  styleUrl: './terms-of-service.component.scss',
+  templateUrl: './terms.component.html',
+  styleUrl: './terms.component.scss',
 })
 export class TermsOfServiceComponent {}

@@ -68,7 +68,7 @@ export class NavMenuComponent {
   }
 
   protected onAboutClick(): void {
-    this.router.navigate(['/acerca-de']);
+    this.router.navigate(['/acerca']);
     this.onMenuItemClick();
   }
 
