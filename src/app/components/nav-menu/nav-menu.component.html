@@ -1,6 +1,10 @@
-@if (isSidebarMenuOpen) {
-  <div class="navbar__overlay" (click)="toggleMenu()"></div>
-}
+  <div
+    class="navbar__overlay"
+    (click)="isSidebarMenuOpen && toggleMenu()"
+    [style.transition]="'opacity 0.2s ease'"
+    [style.opacity]="isSidebarMenuOpen ? '1' : '0'"
+    [style.pointerEvents]="isSidebarMenuOpen ? 'auto' : 'none'"
+  ></div>
 <nav class="navbar">
   <div class="navbar__content page-width">
     <button class="navbar__logo" (click)="onLogoClick()" aria-label="Go to homepage">
@@ -12,7 +16,7 @@
         <li (click)="onProductsItemClick(); $event.stopPropagation()">Productos</li>
         <li (click)="onMenuItemClick(); $event.stopPropagation()">Guias</li>
         <li (click)="onAboutClick(); $event.stopPropagation()">Acerca de</li>
-        <li (click)="onMenuItemClick(); $event.stopPropagation()">Contacto</li>
+        <li routerLink="/contacto" (click)="onMenuItemClick(); $event.stopPropagation()">Contacto</li>
       </div>
 
       <div class="navbar__menu-social-links">

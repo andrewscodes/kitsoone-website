@@ -57,13 +57,12 @@
       padding: 1rem 2.5rem;
       font-size: 1.1rem;
       font-weight: 600;
-      border-radius: 50px;
+      border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s ease;      
 
       &:hover {
-        background: var(--primary-accent);       
-        box-shadow: 0 10px 25px var(--primary-accent-box-shadow);
+        background: var(--primary-accent-hover);
       }
     }
   }
@@ -132,7 +131,7 @@
     padding: 1rem 2.5rem;
     font-size: 1.1rem;
     font-weight: 600;
-    border-radius: 50px;
+    border-radius: 12px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -140,8 +139,7 @@
     transition: all 0.3s ease;
 
     &:hover {
-      background: var(--primary-accent);
-      box-shadow: 0 10px 25px var(--primary-accent-box-shadow);
+      background: var(--primary-accent-hover);
     }
 
     i {
