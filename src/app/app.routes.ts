@@ -5,6 +5,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { WarrantyComponent } from './components/policies/warranty/warranty.component';
 import { TermsOfServiceComponent } from './components/policies/terms/terms.component';
 import { ShippingComponent } from './components/policies/shipping/shipping.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'garantia', component: WarrantyComponent },
   { path: 'envios', component: ShippingComponent },
   { path: 'terminos', component: TermsOfServiceComponent },
+  { path: 'contacto', component: ContactComponent },
   { path: '**', redirectTo: '' },
 ];

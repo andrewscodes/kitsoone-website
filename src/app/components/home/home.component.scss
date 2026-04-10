@@ -49,22 +49,6 @@
         font-weight: 500;
         letter-spacing: 1px;
       }
-
-    &-buy-button {
-      background: var(--primary-accent);
-      color: var(--text-color-light);
-      border: none;
-      padding: 1rem 2.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;      
-
-      &:hover {
-        background: var(--primary-accent-hover);
-      }
-    }
   }
 
   &__products-container {
@@ -125,22 +109,9 @@
   }
 
   &__discord-button {
-    background: var(--primary-accent);
-    color: var(--text-color-light);
-    border: none;
-    padding: 1rem 2.5rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 12px;
-    text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: var(--primary-accent-hover);
-    }
 
     i {
       font-size: 1.1rem;

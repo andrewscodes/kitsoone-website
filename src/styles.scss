@@ -45,3 +45,19 @@ body {
       padding: 0 1rem;
     }
 }
+
+.default-button {
+  background: var(--primary-accent);
+  color: var(--text-color-light);
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;      
+
+  &:hover {
+    background: var(--primary-accent-hover);
+  }
+}
