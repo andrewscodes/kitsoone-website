@@ -48,11 +48,14 @@
     align-self: center;
   }
 
-  &__input, &__textarea {
-    font-size: 1rem;
-    border: 1px solid #bfc9d1;
-    border-radius: 4px;
-    padding: 1rem;
-    width: 100%;
+  --p-floatlabel-focus-color: var(--primary-accent);
+
+  &__textarea {
+
+    textarea{
+      width: 100%;
+      resize: none;
+    }
+    
   }
 }
