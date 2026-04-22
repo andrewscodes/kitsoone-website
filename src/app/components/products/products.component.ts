@@ -42,6 +42,10 @@ import { SKELETON_ITEMS } from '../../constants/product.constants';
 export class ProductsComponent {
   private readonly apiService = inject(KitsooneApiService);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly categoryLabels: Record<string, string> = {
+    Keyboard: 'Teclado',
+    Part: 'Accesorio',
+  };
 
   protected allProducts: ProductResponse[] = [];
   protected filteredProducts: ProductResponse[] = [];
@@ -66,6 +70,12 @@ export class ProductsComponent {
   protected onFiltersVisibleChange(value: boolean): void {
     this.isFiltersOpen = value;
     this.cdr.markForCheck();
+  }
+
+  protected getCategory(product: ProductResponse): string {
+    const value =
+      product.attributes.find((a) => a.key === 'Category')?.value ?? '';
+    return this.categoryLabels[value] ?? value;
   }
 
   protected onFilterChange(filters: ProductFilters): void {

@@ -48,6 +48,10 @@ export class HomeComponent {
   private readonly platform = inject(PLATFORM_ID);
   private readonly apiService = inject(KitsooneApiService);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly categoryLabels: Record<string, string> = {
+    Keyboard: 'Teclado',
+    Part: 'Accesorio',
+  };
   protected readonly discordUrl = DISCORD_URL;
   protected products: ProductResponse[] = [];
   protected productsSkeletonSlides = SKELETON_ITEMS;
@@ -62,6 +66,12 @@ export class HomeComponent {
         this.initializeShowcaseSwiper();
       });
     });
+  }
+
+  protected getCategory(product: ProductResponse): string {
+    const value =
+      product.attributes.find((a) => a.key === 'Category')?.value ?? '';
+    return this.categoryLabels[value] ?? value;
   }
 
   private initializeProductsSwiper(): void {

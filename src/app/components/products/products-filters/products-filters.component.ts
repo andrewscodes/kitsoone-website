@@ -57,7 +57,7 @@ export class ProductsFiltersComponent implements OnChanges {
   protected connectivityCounts: Record<string, number> = {};
   protected colorCounts: Record<string, number> = {};
 
-  ngOnChanges(): void {
+  public ngOnChanges(): void {
     if (this.availableFilters) {
       this.categories = this.availableFilters.categories.map((v) => ({
         label: CATEGORY_LABELS[v] ?? v,
