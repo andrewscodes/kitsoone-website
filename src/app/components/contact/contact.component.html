@@ -4,21 +4,35 @@
     <strong>Para consultas sobre pedidos o la tienda</strong>, por favor utiliza el siguiente formulario para contactarnos. Te responderemos lo antes posible.
     <strong>¿Necesitas ayuda con tu teclado?</strong> Únete a nuestro <a href="https://discord.gg/kitsoone" target="_blank">Discord de la comunidad</a>, donde hay un canal dedicado para ayudarte con estos problemas.
   </p>
-  <form class="contact__form">
+  <form class="contact__form" (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
     <div class="contact__row">
       <p-floatlabel variant="in">
-        <input pInputText id="name" autocomplete="off" />
+        <input pInputText id="name" name="name" [(ngModel)]="name" #nameField="ngModel" required autocomplete="off" [invalid]="nameField.invalid && nameField.touched" />
         <label for="name">Nombre</label>
       </p-floatlabel>
       <p-floatlabel variant="in">
-        <input pInputText id="email" autocomplete="off" />
+        <input pInputText id="email" name="email" [(ngModel)]="email" #emailField="ngModel" required type="email" autocomplete="off" [invalid]="emailField.invalid && emailField.touched" />
         <label for="email">Correo electrónico</label>
-      </p-floatlabel>    
+      </p-floatlabel>
     </div>
-     <p-floatlabel variant="in" class="contact__textarea">
-        <textarea pTextarea id="in_label" rows="4" cols="30"></textarea>
-        <label for="in_label">In Label</label>
-     </p-floatlabel>
-    <button type="submit" class="default-button contact__submit">Enviar</button>
+    <p-floatlabel variant="in" class="contact__textarea">
+      <textarea pTextarea id="comment" name="comment" [(ngModel)]="comment" #commentField="ngModel" required rows="4" cols="30" [invalid]="commentField.invalid && commentField.touched"></textarea>
+      <label for="comment">Comentario</label>
+    </p-floatlabel>
+
+    @if (statusMessage()) {
+      <p class="contact__status" [class.contact__status--error]="isError()">
+        <i [class]="isError() ? 'pi pi-times-circle' : 'pi pi-check-circle'"></i>
+        {{ statusMessage() }}
+      </p>
+    }
+
+    <button
+      type="submit"
+      class="default-button contact__submit"
+      [disabled]="submitting()"
+    >
+      Enviar
+    </button>
   </form>
 </section>

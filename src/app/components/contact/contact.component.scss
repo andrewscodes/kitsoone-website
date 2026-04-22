@@ -48,6 +48,27 @@
     align-self: center;
   }
 
+  &__status {
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0;
+    line-height: 1;
+
+    i {
+      color: var(--color-success);
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    &--error {
+      i {
+        color: var(--color-error);
+      }
+    }
+  }
+
   --p-floatlabel-focus-color: var(--primary-accent);
 
   &__textarea {
@@ -58,4 +79,9 @@
     }
     
   }
+}
+
+::ng-deep .p-inputtext.ng-invalid.ng-touched:hover,
+::ng-deep .p-textarea.ng-invalid.ng-touched:hover {
+  border-color: var(--p-inputtext-invalid-border-color);
 }
