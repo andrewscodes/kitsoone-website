@@ -29,7 +29,12 @@
               "includePaths": ["src"]
             },
             "assets": [
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "public",
+                "output": "."
+              }
             ],
             "styles": [
               "src/styles.scss"
