@@ -1,11 +1,14 @@
 import {
   Component,
+  inject,
   Renderer2,
   Inject,
   DOCUMENT,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
@@ -13,16 +16,18 @@ import {
   GITHUB_URL,
   generateWhatsAppUrl,
 } from '../../constants';
+import { CartService } from '../../service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kitsoone-nav-menu',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, AsyncPipe, OverlayBadgeModule],
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss'],
 })
 export class NavMenuComponent {
+  protected readonly cartItemCount$ = inject(CartService).itemCount$;
   protected isSidebarMenuOpen = false;
 
   // Social media URLs

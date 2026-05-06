@@ -70,12 +70,15 @@
     display: flex;
     cursor: pointer;  
     padding: 0;
+    position: relative;
 
     .pi {
       color: var(--text-color-dark);
       font-size: 20px;      
     }
   }
+  --p-badge-sm-height: 16px;
+  --p-badge-sm-min-width: 16px;
 }
 
 @media (max-width: breakpoints.$lg) {
@@ -233,5 +236,5 @@
     .navbar__menu-options li::after {
       display: none;
     }
-  }
+  } 
 }

@@ -43,7 +43,7 @@
       @if (productsError && !isLoadingProducts) {
         <div class="products__error">
           <i class="pi pi-exclamation-triangle text-2xl"></i>
-          <p class="mt-2">{{ productsError }}</p>
+          <p class="mt-2">Ocurrió un problema al momento de cargar los productos.</p>
         </div>
       }
 
@@ -81,7 +81,7 @@
         <ng-template #list let-items>
           <div class="flex flex-col gap-4 mb-10">
             @for (product of items; track product.id) {
-            <div class="flex gap-4 items-center border-surface product-card">
+            <div class="flex gap-4 items-center border-surface product-card" [routerLink]="['/productos', slugify(product.name)]">
               <div class="relative shrink-0 w-40 h-40 product-card__media">
                 <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover rounded-border" />
               </div>
@@ -98,7 +98,7 @@
           <div class="grid grid-cols-12 gap-4 md:gap-8 mb-10">
             @for (product of items; track product.id) {
             <div class="col-span-6 md:col-span-4 lg:col-span-3">
-              <div class="border-surface product-card">
+              <div class="border-surface product-card" [routerLink]="['/productos', slugify(product.name)]">
                 <div class="relative mx-auto product-card__media">                    
                   <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />
                 </div>

@@ -1,0 +1,109 @@
+<section class="product page-width">
+
+  @if (isLoading) {
+    <div>
+      <p-skeleton width="200px" height="18px" class="mb-4" />
+      <div class="product__layout">
+        <p-skeleton width="100%" height="480px" />
+        <div class="product__info">
+          <p-skeleton width="80%" height="36px" class="mb-3" />
+          <p-skeleton width="40%" height="28px" class="mb-4" />
+          <p-skeleton width="100%" height="60px" class="mb-6" />
+          <p-skeleton width="50%" height="20px" class="mb-2" />
+          <p-skeleton width="70%" height="44px" class="mb-4" />
+          <p-skeleton width="100%" height="56px" />
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (error && !isLoading) {
+    <div class="product__error">
+      <i class="pi pi-exclamation-triangle"></i>
+      <p>Ocurrió un problema al momento de cargar el producto.</p>
+    </div>
+  }
+
+  @if (product && !isLoading) {
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"/>
+
+    <div class="product__layout">
+      <!-- Image -->
+      <div class="product__gallery">
+        <img [src]="product.imageUrl" [alt]="product.name" class="product__gallery-image" />
+      </div>
+
+      <!-- Details -->
+      <div class="product__info">
+        <h1 class="product__info-title">{{ product.name }}</h1>
+
+        <!-- Price range -->
+        <div class="product__info-price-range">
+          @if (hasPriceRange) {
+            ${{ minPrice | number:'1.0-0':'es' }} – ${{ maxPrice | number:'1.0-0':'es' }}
+          } @else {
+            ${{ minPrice | number:'1.0-0':'es' }}
+          }
+        </div>
+
+        @if (product.description) {
+          <p class="product__info-description">{{ product.description }}</p>
+        }
+
+        <hr class="product__info-divider" />
+
+        <!-- Options -->
+        @for (option of sortedOptions(); track option.id) {
+          <div class="product__info-option">
+            <div class="product__info-option-label">
+              {{ option.name }}: <strong>{{ selectedOptions[option.name] }}</strong>
+            </div>
+            <div class="product__info-option-values">
+              @for (val of option.values; track val.id) {
+                <button
+                  class="product__info-option-btn"
+                  [class.product__info-option-btn--selected]="selectedOptions[option.name] === val.value"
+                  (click)="selectOption(option.name, val.value)">
+                  {{ val.value }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Total price after selection -->
+        @if (selectedVariant) {
+          <div class="product__info-total">
+            ${{ selectedVariant.price | number:'1.0-0':'es' }}
+          </div>
+        }
+
+        <!-- Quantity + Add to cart -->
+        <div class="product__info-actions">
+          <p-inputnumber
+            [(ngModel)]="quantity"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            [min]="1"
+            [step]="1"
+            inputId="quantity"
+            spinnerMode="horizontal">
+            <ng-template #incrementbuttonicon>
+              <span class="pi pi-plus"></span>
+            </ng-template>
+            <ng-template #decrementbuttonicon>
+              <span class="pi pi-minus"></span>
+            </ng-template>
+          </p-inputnumber>
+          <button
+            class="default-button product__info-actions-add-btn"
+            [disabled]="!allOptionsSelected"
+            (click)="addToCart()">
+            Agregar al carrito
+          </button>
+        </div>
+      </div>
+
+    </div>
+  }
+</section>

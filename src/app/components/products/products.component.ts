@@ -20,6 +20,7 @@ import {
   ProductFilters,
 } from './products-filters/products-filters.component';
 import { SKELETON_ITEMS } from '../../constants/product.constants';
+import { slugify } from '../../constants';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,6 +48,7 @@ export class ProductsComponent {
     Part: 'Accesorio',
   };
 
+  protected readonly slugify = slugify;
   protected allProducts: ProductResponse[] = [];
   protected filteredProducts: ProductResponse[] = [];
   protected availableFilters: AvailableFiltersResponse | null = null;

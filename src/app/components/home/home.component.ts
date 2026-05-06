@@ -13,8 +13,9 @@ import { TagModule } from 'primeng/tag';
 import { ImageModule } from 'primeng/image';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { AutoFocusModule } from 'primeng/autofocus';
-import { DISCORD_URL } from '../../constants';
+import { DISCORD_URL, slugify } from '../../constants';
 import {
   KitsooneApiService,
   ProductResponse,
@@ -31,6 +32,7 @@ import {
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     TagModule,
     ImageModule,
     AutoFocusModule,
@@ -52,6 +54,7 @@ export class HomeComponent {
     Keyboard: 'Teclado',
     Part: 'Accesorio',
   };
+  protected readonly slugify = slugify;
   protected readonly discordUrl = DISCORD_URL;
   protected products: ProductResponse[] = [];
   protected productsSkeletonSlides = SKELETON_ITEMS;

@@ -47,9 +47,12 @@
         <i class="pi pi-user"></i>
       </button>
 
-      <button class="navbar__cart-button navbar-button" (click)="onCartClick()">
-        <i class="pi pi-shopping-cart"></i>
-      </button>
+      @let cartCount = (cartItemCount$ | async) ?? 0;
+      <p-overlaybadge [value]="cartCount.toString()" [badgeDisabled]="cartCount === 0" badgeSize="small">
+        <button class="navbar-button" (click)="onCartClick()">
+          <i class="pi pi-shopping-cart"></i>
+        </button>
+      </p-overlaybadge>
 
       <button class="navbar__menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
         <i class="pi" [class.pi-bars]="!isSidebarMenuOpen" [class.pi-times]="isSidebarMenuOpen"></i>
