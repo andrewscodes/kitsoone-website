@@ -3,13 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <script>
-      // GitHub Pages SPA redirect
-      // Encodes the current path into the query string and redirects to index.html
+      // GitHub Pages SPA redirect — always send to root index.html
       var path = window.location.pathname;
       var search = window.location.search;
       var hash = window.location.hash;
       window.location.replace(
-        '/' + window.location.pathname.split('/')[1] +
         '/?p=' + encodeURIComponent(path.slice(1) + search) +
         (hash ? '&hash=' + encodeURIComponent(hash.slice(1)) : '')
       );
