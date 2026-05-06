@@ -2,6 +2,9 @@
 
 .product {
   padding-block: 5rem;
+  @media (max-width: breakpoints.$lg) {
+    padding-top: 2rem;
+  }
 
   &__layout {
     display: grid;
