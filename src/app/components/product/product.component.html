@@ -80,21 +80,11 @@
 
         <!-- Quantity + Add to cart -->
         <div class="product__info-actions">
-          <p-inputnumber
-            [(ngModel)]="quantity"
-            [showButtons]="true"
-            buttonLayout="horizontal"
-            [min]="1"
-            [step]="1"
-            inputId="quantity"
-            spinnerMode="horizontal">
-            <ng-template #incrementbuttonicon>
-              <span class="pi pi-plus"></span>
-            </ng-template>
-            <ng-template #decrementbuttonicon>
-              <span class="pi pi-minus"></span>
-            </ng-template>
-          </p-inputnumber>
+          <div class="product__info-actions-quantity">
+            <button type="button" class="product__info-actions-quantity-btn" (click)="decrement()" [disabled]="quantity <= 1">−</button>
+            <input type="number" class="product__info-actions-quantity-input" [(ngModel)]="quantity" (change)="clampQuantity()" min="1" />
+            <button type="button" class="product__info-actions-quantity-btn" (click)="increment()">+</button>
+          </div>
           <button
             class="default-button product__info-actions-add-btn"
             [disabled]="!allOptionsSelected"

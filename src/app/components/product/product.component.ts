@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { SkeletonModule } from 'primeng/skeleton';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
 import {
@@ -32,7 +31,6 @@ import { slugify } from '../../constants';
     RouterModule,
     SkeletonModule,
     BreadcrumbModule,
-    InputNumberModule,
     FormsModule,
   ],
   templateUrl: './product.component.html',
@@ -123,8 +121,19 @@ export class ProductComponent {
 
   protected addToCart(): void {
     if (!this.product || !this.allOptionsSelected) return;
-
     this.cartService.addItem(this.quantity);
+  }
+
+  protected increment(): void {
+    this.quantity++;
+  }
+
+  protected decrement(): void {
+    if (this.quantity > 1) this.quantity--;
+  }
+
+  protected clampQuantity(): void {
+    this.quantity = Math.max(1, Math.floor(this.quantity) || 1);
   }
 
   private loadProduct(slug: string): void {

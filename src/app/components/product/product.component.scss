@@ -115,14 +115,55 @@
       gap: 1rem;
       flex-wrap: wrap;
 
-      ::ng-deep .p-inputnumber {
+      &-quantity {
+        display: flex;
+        align-items: center;
         width: 130px;
         flex-shrink: 0;
+        height: 55px;
+        border: 1px solid var(--transparent-black-strong);
+        border-radius: 8px;
+        overflow: hidden;
+ 
+        &-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 38px;
+          flex-shrink: 0;
+          height: 100%;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          font-size: 1.1rem;
 
-        .p-inputnumber-input {
+          &:hover:not(:disabled) {
+            background: var(--transparent-black);
+          }
+
+          &:disabled {
+            opacity: 0.35;
+            cursor: default;
+          }
+        }
+
+        &-input {
+          flex: 1;
+          height: 100%;
+          border: none;
           text-align: center;
+          background: transparent;
+          font-size: 1rem;
+
           min-width: 0;
-          height: 55px;
+          outline: none;
+
+          /* Hide number arrows */
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
         }
       }
 
