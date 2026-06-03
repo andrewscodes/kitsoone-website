@@ -73,9 +73,14 @@ export class ProductComponent implements OnDestroy {
   protected selectedOptions: Record<string, string> = {};
   protected quantity = 1;
 
-  protected get safeDetailsHtml(): SafeHtml {
+  protected get detailsHtml(): SafeHtml {
     const html = this.product?.detailsHtml ?? '';
     return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  protected get hasDetailsHtml(): boolean {
+    const html = this.product?.detailsHtml ?? '';
+    return html.trim().length > 0;
   }
 
   protected get minPrice(): number {

@@ -96,9 +96,10 @@
 
     </div>
 
-    <hr class="product__details-divider" />
-
-    <div class="product__details" [innerHTML]="safeDetailsHtml"></div>
+    @if (hasDetailsHtml) {
+      <hr class="product__details-divider" />
+      <div class="product__details" [innerHTML]="detailsHtml"></div>
+    }
   }
 
   @if (product && !isLoading) {
