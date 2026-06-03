@@ -74,8 +74,7 @@ export class ProductComponent implements OnDestroy {
   protected quantity = 1;
 
   protected get safeDetailsHtml(): SafeHtml {
-    const html =
-      this.product?.detailsHtml ?? '<h2>Technical Specifications</h2>';
+    const html = this.product?.detailsHtml ?? '';
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
