@@ -95,5 +95,35 @@
       </div>
 
     </div>
+
+    <hr class="product__details-divider" />
+
+    <div class="product__details" [innerHTML]="safeDetailsHtml"></div>
+  }
+
+  @if (product && !isLoading) {
+    <div class="product__related">
+      <h2 class="product__related-title">Productos relacionados</h2>
+      <swiper-container #relatedSwiper init="false">
+        @for (p of relatedProducts; track p.id) {
+          <swiper-slide class="product__related-slide">
+            <div
+              class="border-surface product-card"
+              tabindex="0"
+              role="link"
+              (click)="openRelatedProduct(p, $event)"
+              (keydown.enter)="openRelatedProduct(p, $event)"
+              (keydown.space)="openRelatedProduct(p, $event)">
+              <div class="relative mx-auto product-card__media">
+                <img [src]="p.imageUrl" [alt]="p.name" class="w-full rounded-border" />
+              </div>
+              <div class="font-medium mt-2">{{ p.name }}</div>
+              <div class="mt-0 font-semibold text-lg">${{ p.price | number:'1.0-0':'es' }}</div>
+            </div>
+          </swiper-slide>
+        }
+      </swiper-container>
+      <swiper-pagination class="swiper-related swiper-pagination" />
+    </div>
   }
 </section>

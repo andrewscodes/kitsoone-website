@@ -4,8 +4,9 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
+import { slugify } from '../constants';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import {
   ApiError,
   ProductListResponse,
@@ -55,6 +56,38 @@ export class KitsooneApiService {
     return this.http
       .get<ProductResponse[]>(`${this.baseUrl}/api/products/latest`)
       .pipe(catchError(this.handleError));
+  }
+
+  public getProductById(id: string): Observable<ProductResponse> {
+    return this.http
+      .get<ProductResponse>(`${this.baseUrl}/api/products/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  public getProductBySlug(slug: string): Observable<ProductResponse> {
+    const normalizedSlug = slugify(slug);
+
+    return this.getProducts().pipe(
+      map(({ products }) =>
+        products.find((product) => slugify(product.name) === normalizedSlug),
+      ),
+      switchMap((product) =>
+        product
+          ? this.getProductById(product.id)
+          : this.getProductById(slug).pipe(
+              catchError(() =>
+                throwError(
+                  () =>
+                    ({
+                      message: 'Producto no encontrado.',
+                      statusCode: 404,
+                      details: { slug: normalizedSlug },
+                    }) as ApiError,
+                ),
+              ),
+            ),
+      ),
+    );
   }
 
   /**

@@ -47,6 +47,7 @@ export interface ProductResponse {
   price: number;
   imageUrl: string;
   description: string;
+  detailsHtml?: string;
   hasVariants: boolean;
   attributes: ProductAttributeResponse[];
   options: ProductOptionResponse[];
