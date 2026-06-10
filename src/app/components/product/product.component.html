@@ -30,7 +30,36 @@
     <div class="product__layout">
       <!-- Image -->
       <div class="product__gallery">
-        <img [src]="product.imageUrl" [alt]="product.name" class="product__gallery-image" />
+        @if (galleryImages.length > 1) {
+          <swiper-container
+            class="product__gallery-main"
+            thumbs-swiper=".product__gallery-thumbs"
+            navigation="true"
+            space-between="10"
+            slides-per-view="1">
+            @for (img of galleryImages; track img) {
+              <swiper-slide>
+                <img [src]="img" [alt]="product.name" class="product__gallery-image" />
+              </swiper-slide>
+            }
+          </swiper-container>
+
+          <swiper-container
+            class="product__gallery-thumbs"
+            space-between="10"
+            slides-per-view="5.5"
+            center-insufficient-slides="true"
+            free-mode="true"
+            watch-slides-progress="true">
+            @for (img of galleryImages; track img) {
+              <swiper-slide class="product__gallery-thumb">
+                <img [src]="img" [alt]="product.name" />
+              </swiper-slide>
+            }
+          </swiper-container>
+        } @else {
+          <img [src]="product.imageUrl" [alt]="product.name" class="product__gallery-image" />
+        }
       </div>
 
       <!-- Details -->
@@ -104,7 +133,7 @@
 
   @if (product && !isLoading) {
     <div class="product__related">
-      <h2 class="product__related-title">Productos relacionados</h2>
+      <h2 class="product__related-title">Te podrían interesar</h2>
       <swiper-container #relatedSwiper init="false">
         @for (p of relatedProducts; track p.id) {
           <swiper-slide class="product__related-slide">

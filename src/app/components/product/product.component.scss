@@ -13,6 +13,11 @@
     gap: 4rem;
     align-items: start;
 
+    // Prevent grid children with custom elements from forcing oversized tracks.
+    > * {
+      min-width: 0;
+    }
+
     @media (max-width: breakpoints.$lg) {
       grid-template-columns: 1fr;
       gap: 2rem;
@@ -22,13 +27,53 @@
   &__gallery {
     position: sticky;
     top: calc(var(--menu-height) + 1.5rem);
+    min-width: 0;
 
     &-image {
-    width: 100%;
-    border-radius: 12px;
-    display: block;
-    object-fit: cover;
-  }
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      object-fit: cover;
+    }
+
+    &-main {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      --swiper-navigation-color: #fff;
+      --swiper-navigation-size: 28px;
+
+      swiper-slide {
+        width: 100%;
+      }
+    }
+
+    &-thumbs {
+      margin-top: 0.75rem;
+
+      swiper-slide {
+        opacity: 0.45;
+        cursor: pointer;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: opacity 0.2s ease;
+
+        &.swiper-slide-thumb-active {
+          opacity: 1;
+        }
+
+        img {
+          display: block;
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          object-fit: cover;
+        }
+      }
+    }
 
     @media (max-width: breakpoints.$lg) {
       position: static;
