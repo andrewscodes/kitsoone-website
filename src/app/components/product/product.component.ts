@@ -54,12 +54,6 @@ export class ProductComponent implements OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly sanitizer = inject(DomSanitizer);
 
-  // TODO: temporary test images — remove once products provide multiple images.
-  private readonly testGalleryImages: string[] = [
-    'assets/images/onyx_back.png',
-    'assets/images/onyx_black.jpg',
-  ];
-
   private routeSub?: Subscription;
 
   protected readonly breadcrumbHome: MenuItem = {
@@ -95,7 +89,6 @@ export class ProductComponent implements OnDestroy {
     for (const url of [
       this.product.imageUrl,
       ...this.product.variants.map((v) => v.imageUrl),
-      ...this.testGalleryImages,
     ]) {
       if (url && !urls.includes(url)) urls.push(url);
     }
