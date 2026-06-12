@@ -44,6 +44,12 @@ import { slugify } from '../../constants';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductComponent implements OnDestroy {
+  @ViewChild('gallerySwiper', { static: false })
+  public gallerySwiperRef?: ElementRef;
+
+  @ViewChild('thumbsSwiper', { static: false })
+  public thumbsSwiperRef?: ElementRef;
+
   @ViewChild('relatedSwiper', { static: false })
   public relatedSwiperRef?: ElementRef;
 
@@ -55,6 +61,8 @@ export class ProductComponent implements OnDestroy {
   private readonly sanitizer = inject(DomSanitizer);
 
   private routeSub?: Subscription;
+  private gallerySwiperInstance: Record<string, unknown> | null = null;
+  private thumbsSwiperInstance: Record<string, unknown> | null = null;
 
   protected readonly breadcrumbHome: MenuItem = {
     icon: 'pi pi-home',
@@ -160,24 +168,75 @@ export class ProductComponent implements OnDestroy {
 
   protected selectOption(optionName: string, value: string): void {
     this.selectedOptions = { ...this.selectedOptions, [optionName]: value };
+    this.navigateToVariantImage();
     this.cdr.markForCheck();
+  }
+
+  private navigateToVariantImage(): void {
+    if (!this.selectedVariant?.imageUrl) return;
+
+    const gallerySwiper = this.getGallerySwiperInstance();
+    const thumbsSwiper = this.getThumbsSwiperInstance();
+    if (!gallerySwiper) return;
+
+    const targetImageUrl = this.selectedVariant.imageUrl;
+    const slideIndex = this.galleryImages.indexOf(targetImageUrl);
+    if (slideIndex !== -1) {
+      (gallerySwiper['slideTo'] as (index: number, speed: number) => void)(
+        slideIndex,
+        0,
+      );
+      if (thumbsSwiper) {
+        (thumbsSwiper['slideTo'] as (index: number, speed: number) => void)(
+          slideIndex,
+          0,
+        );
+      }
+    }
+  }
+
+  private getGallerySwiperInstance(): Record<string, unknown> | null {
+    if (
+      !this.gallerySwiperInstance &&
+      this.gallerySwiperRef?.nativeElement?.swiper
+    ) {
+      this.gallerySwiperInstance = this.gallerySwiperRef.nativeElement.swiper;
+    }
+    return this.gallerySwiperInstance;
+  }
+
+  private getThumbsSwiperInstance(): Record<string, unknown> | null {
+    if (
+      !this.thumbsSwiperInstance &&
+      this.thumbsSwiperRef?.nativeElement?.swiper
+    ) {
+      this.thumbsSwiperInstance = this.thumbsSwiperRef.nativeElement.swiper;
+    }
+    return this.thumbsSwiperInstance;
   }
 
   protected addToCart(): void {
     if (!this.product || !this.allOptionsSelected) return;
+    this.clampQuantity();
     this.cartService.addItem(this.quantity);
+    this.cdr.markForCheck();
   }
 
   protected increment(): void {
     this.quantity++;
+    this.cdr.markForCheck();
   }
 
   protected decrement(): void {
-    if (this.quantity > 1) this.quantity--;
+    if (this.quantity > 1) {
+      this.quantity--;
+      this.cdr.markForCheck();
+    }
   }
 
   protected clampQuantity(): void {
     this.quantity = Math.max(1, Math.floor(this.quantity) || 1);
+    this.cdr.markForCheck();
   }
 
   protected openRelatedProduct(product: ProductResponse, event: Event): void {
@@ -210,7 +269,6 @@ export class ProductComponent implements OnDestroy {
           { label: 'Productos', routerLink: '/productos' },
           { label: product.name },
         ];
-        this.preSelectFirstOptions();
         this.loadRelatedProducts(product.id);
         this.isLoading = false;
         this.flushView();

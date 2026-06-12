@@ -32,6 +32,7 @@
       <div class="product__gallery">
         @if (galleryImages.length > 1) {
           <swiper-container
+            #gallerySwiper
             class="product__gallery-main"
             thumbs-swiper=".product__gallery-thumbs"
             navigation="true"
@@ -45,6 +46,7 @@
           </swiper-container>
 
           <swiper-container
+            #thumbsSwiper
             class="product__gallery-thumbs"
             space-between="10"
             slides-per-view="5.5"

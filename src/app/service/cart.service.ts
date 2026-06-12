@@ -12,6 +12,10 @@ export class CartService {
   }
 
   public addItem(quantity: number = 1): void {
-    this.count$.next(this.count$.getValue() + quantity);
+    const parsedQuantity = Number(quantity);
+    const safeQuantity = Number.isFinite(parsedQuantity)
+      ? Math.max(1, Math.floor(parsedQuantity))
+      : 1;
+    this.count$.next(this.count$.getValue() + safeQuantity);
   }
 }
