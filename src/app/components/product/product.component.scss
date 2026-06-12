@@ -152,7 +152,7 @@
     &-total {
       font-size: 1.5rem;
       font-weight: 700;
-      margin: 0.5rem 0 1.5rem;
+      margin-top: 0.5rem;
     }
 
     &-actions {
@@ -160,6 +160,7 @@
       align-items: center;
       gap: 1rem;
       flex-wrap: wrap;
+      margin-top: 1rem;
 
       &-quantity {
         display: flex;
