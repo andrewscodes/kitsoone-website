@@ -253,6 +253,8 @@ export class ProductComponent implements OnDestroy {
     this.breadcrumbItems = [];
     this.selectedOptions = {};
     this.quantity = 1;
+    this.gallerySwiperInstance = null;
+    this.thumbsSwiperInstance = null;
     this.flushView();
 
     this.apiService.getProductBySlug(slug).subscribe({
