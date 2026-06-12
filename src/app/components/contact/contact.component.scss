@@ -96,6 +96,17 @@
       width: 100%;
       resize: none;
     }
-    
+
+  }
+}
+
+@media (max-width: 768px) {
+  ::ng-deep .contact .p-toast {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%);
+    top: 20px !important;
+    width: calc(100% - 40px);
+    max-width: 100%;
   }
 }
