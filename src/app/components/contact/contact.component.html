@@ -1,4 +1,5 @@
 <section class="contact page-width">
+  <p-toast></p-toast>
   <h2>Contacto</h2>
   <p class="contact__description">
     <strong>Para consultas sobre pedidos o la tienda</strong>, por favor utiliza el siguiente formulario para contactarnos. Te responderemos lo antes posible.
@@ -7,25 +8,18 @@
   <form class="contact__form" (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
     <div class="contact__row">
       <p-floatlabel variant="in">
-        <input pInputText id="name" name="name" [(ngModel)]="name" #nameField="ngModel" required autocomplete="off" [invalid]="nameField.invalid && nameField.touched" />
+        <input pInputText id="name" name="name" [(ngModel)]="name" #nameField="ngModel" required autocomplete="off" [invalid]="submitAttempted() && !nameField.value?.trim()" />
         <label for="name">Nombre</label>
       </p-floatlabel>
       <p-floatlabel variant="in">
-        <input pInputText id="email" name="email" [(ngModel)]="email" #emailField="ngModel" required type="email" autocomplete="off" [invalid]="emailField.invalid && emailField.touched" />
+        <input pInputText id="email" name="email" [(ngModel)]="email" #emailField="ngModel" required type="email" autocomplete="off" [invalid]="submitAttempted() && (!emailField.value?.trim() || !isValidEmail(emailField.value))" />
         <label for="email">Correo electrónico</label>
       </p-floatlabel>
     </div>
     <p-floatlabel variant="in" class="contact__textarea">
-      <textarea pTextarea id="comment" name="comment" [(ngModel)]="comment" #commentField="ngModel" required rows="4" cols="30" [invalid]="commentField.invalid && commentField.touched"></textarea>
+      <textarea pTextarea id="comment" name="comment" [(ngModel)]="comment" #commentField="ngModel" required rows="4" cols="30" [invalid]="submitAttempted() && !commentField.value?.trim()"></textarea>
       <label for="comment">Comentario</label>
     </p-floatlabel>
-
-    @if (statusMessage()) {
-      <p class="contact__status" [class.contact__status--error]="isError()">
-        <i [class]="isError() ? 'pi pi-times-circle' : 'pi pi-check-circle'"></i>
-        {{ statusMessage() }}
-      </p>
-    }
 
     <button
       type="submit"

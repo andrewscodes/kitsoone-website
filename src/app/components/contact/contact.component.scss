@@ -81,7 +81,3 @@
   }
 }
 
-::ng-deep .p-inputtext.ng-invalid.ng-touched:hover,
-::ng-deep .p-textarea.ng-invalid.ng-touched:hover {
-  border-color: var(--p-inputtext-invalid-border-color);
-}
