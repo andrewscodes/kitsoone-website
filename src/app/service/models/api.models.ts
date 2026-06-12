@@ -60,6 +60,13 @@ export interface AvailableFiltersResponse {
   colors: string[];
 }
 
+export interface SearchProductsRequest {
+  searchTerm?: string;
+  categories?: string[];
+  connectivity?: string[];
+  colors?: string[];
+}
+
 export interface ProductListResponse {
   products: ProductResponse[];
   availableFilters: AvailableFiltersResponse;

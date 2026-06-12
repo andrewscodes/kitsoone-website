@@ -289,7 +289,7 @@ export class ProductComponent implements OnDestroy {
   }
 
   private loadRelatedProducts(currentProductId: string): void {
-    this.apiService.getProducts().subscribe({
+    this.apiService.searchProducts().subscribe({
       next: (response) => {
         this.relatedProducts = response.products.filter(
           (p) => p.id !== currentProductId,

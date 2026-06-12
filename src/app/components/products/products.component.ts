@@ -89,7 +89,7 @@ export class ProductsComponent {
     this.productsError = null;
     this.cdr.markForCheck();
 
-    this.apiService.getProducts(filters).subscribe({
+    this.apiService.searchProducts(filters).subscribe({
       next: (response) => {
         if (!filters) {
           this.allProducts = response.products;

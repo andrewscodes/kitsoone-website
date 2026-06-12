@@ -1,9 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { slugify } from '../constants';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -11,9 +7,11 @@ import {
   ApiError,
   ProductListResponse,
   ProductResponse,
+  SearchProductsRequest,
 } from './models/api.models';
 
 export interface ProductQueryFilters {
+  searchTerm?: string;
   categories?: string[];
   connectivity?: string[];
   colors?: string[];
@@ -30,25 +28,20 @@ export class KitsooneApiService {
     'https://tb3ccmgnq5wmqasv7xbfil6w7q0rioau.lambda-url.us-east-2.on.aws';
 
   /**
-   * Get all products
+   * Search products with filters and search term
    */
-  public getProducts(
+  public searchProducts(
     filters?: ProductQueryFilters,
   ): Observable<ProductListResponse> {
-    let params = new HttpParams();
-
-    for (const category of filters?.categories ?? []) {
-      params = params.append('categories', category);
-    }
-    for (const conn of filters?.connectivity ?? []) {
-      params = params.append('connectivity', conn);
-    }
-    for (const color of filters?.colors ?? []) {
-      params = params.append('colors', color);
-    }
+    const body: SearchProductsRequest = {
+      searchTerm: filters?.searchTerm || '',
+      categories: filters?.categories || [],
+      connectivity: filters?.connectivity || [],
+      colors: filters?.colors || [],
+    };
 
     return this.http
-      .get<ProductListResponse>(`${this.baseUrl}/api/products`, { params })
+      .post<ProductListResponse>(`${this.baseUrl}/api/products/search`, body)
       .pipe(catchError(this.handleError));
   }
 
@@ -67,7 +60,7 @@ export class KitsooneApiService {
   public getProductBySlug(slug: string): Observable<ProductResponse> {
     const normalizedSlug = slugify(slug);
 
-    return this.getProducts().pipe(
+    return this.searchProducts().pipe(
       map(({ products }) =>
         products.find((product) => slugify(product.name) === normalizedSlug),
       ),
