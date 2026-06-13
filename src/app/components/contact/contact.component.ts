@@ -18,6 +18,12 @@ import { EmailValidPipe } from '../../pipes/email-valid.pipe';
 const EMAILJS_SERVICE_ID = 'service_3ljbvjz';
 const EMAILJS_TEMPLATE_ID = 'template_udznwss';
 const EMAILJS_PUBLIC_KEY = 'DbinEYxWM9oV4WTao';
+const NAME_LIMIT = 50;
+const EMAIL_LIMIT = 100;
+const COMMENT_LIMIT = 1000;
+const NAME_MAX_LENGTH = NAME_LIMIT - 1;
+const EMAIL_MAX_LENGTH = EMAIL_LIMIT - 1;
+const COMMENT_MAX_LENGTH = COMMENT_LIMIT - 1;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,6 +46,9 @@ export class ContactComponent {
   private readonly emailValidPipe = new EmailValidPipe();
   private readonly messageService = inject(MessageService);
 
+  public readonly nameMaxLength = NAME_MAX_LENGTH;
+  public readonly emailMaxLength = EMAIL_MAX_LENGTH;
+  public readonly commentMaxLength = COMMENT_MAX_LENGTH;
   public name = '';
   public email = '';
   public comment = '';
@@ -54,15 +63,21 @@ export class ContactComponent {
     this.submitAttempted.set(true);
 
     const isNameValid = this.name.trim().length > 0;
+    const isNameLengthValid = this.name.length <= NAME_MAX_LENGTH;
     const isEmailNotEmpty = this.email.trim().length > 0;
+    const isEmailLengthValid = this.email.length <= EMAIL_MAX_LENGTH;
     const isEmailValid = this.emailValidPipe.transform(this.email);
     const isCommentValid = this.comment.trim().length > 0;
+    const isCommentLengthValid = this.comment.length <= COMMENT_MAX_LENGTH;
 
     if (
       !isNameValid ||
+      !isNameLengthValid ||
       !isEmailNotEmpty ||
+      !isEmailLengthValid ||
       !isEmailValid ||
       !isCommentValid ||
+      !isCommentLengthValid ||
       form.invalid
     ) {
       this.messageService.clear();
@@ -73,6 +88,12 @@ export class ContactComponent {
           summary: 'Nombre invalido',
           detail: 'El nombre es obligatorio.',
         });
+      } else if (!isNameLengthValid) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Nombre invalido',
+          detail: `El nombre debe tener menos de ${NAME_LIMIT} caracteres.`,
+        });
       }
 
       if (!isEmailNotEmpty) {
@@ -80,6 +101,12 @@ export class ContactComponent {
           severity: 'error',
           summary: 'Correo invalido',
           detail: 'El correo electronico es obligatorio.',
+        });
+      } else if (!isEmailLengthValid) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Correo invalido',
+          detail: `El correo electronico debe tener menos de ${EMAIL_LIMIT} caracteres.`,
         });
       } else if (!isEmailValid) {
         this.messageService.add({
@@ -94,6 +121,12 @@ export class ContactComponent {
           severity: 'error',
           summary: 'Comentario invalido',
           detail: 'El comentario es obligatorio.',
+        });
+      } else if (!isCommentLengthValid) {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Comentario invalido',
+          detail: `El comentario debe tener menos de ${COMMENT_LIMIT} caracteres.`,
         });
       }
 

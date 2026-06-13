@@ -8,16 +8,16 @@
   <form class="contact__form" (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
     <div class="contact__row">
       <p-floatlabel variant="in">
-        <input pInputText id="name" name="name" [(ngModel)]="name" #nameField="ngModel" required autocomplete="off" [invalid]="submitAttempted() && !nameField.value?.trim()" />
+        <input pInputText id="name" name="name" [(ngModel)]="name" #nameField="ngModel" required maxlength="49" autocomplete="off" [invalid]="submitAttempted() && (!nameField.value?.trim() || nameField.value.length > nameMaxLength)" />
         <label for="name">Nombre</label>
       </p-floatlabel>
       <p-floatlabel variant="in">
-        <input pInputText id="email" name="email" [(ngModel)]="email" #emailField="ngModel" required type="email" autocomplete="off" [invalid]="submitAttempted() && (!emailField.value?.trim() || !isValidEmail(emailField.value))" />
+        <input pInputText id="email" name="email" [(ngModel)]="email" #emailField="ngModel" required maxlength="99" type="email" autocomplete="off" [invalid]="submitAttempted() && (!emailField.value?.trim() || emailField.value.length > emailMaxLength || !isValidEmail(emailField.value))" />
         <label for="email">Correo electrónico</label>
       </p-floatlabel>
     </div>
     <p-floatlabel variant="in" class="contact__textarea">
-      <textarea pTextarea id="comment" name="comment" [(ngModel)]="comment" #commentField="ngModel" required rows="4" cols="30" [invalid]="submitAttempted() && !commentField.value?.trim()"></textarea>
+      <textarea pTextarea id="comment" name="comment" [(ngModel)]="comment" #commentField="ngModel" required maxlength="999" rows="4" cols="30" [invalid]="submitAttempted() && (!commentField.value?.trim() || commentField.value.length > commentMaxLength)"></textarea>
       <label for="comment">Comentario</label>
     </p-floatlabel>
 

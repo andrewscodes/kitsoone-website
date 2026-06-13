@@ -1,4 +1,7 @@
+@use '../product-card';
+
 .product-list {
+
   &__filters {
     --p-drawer-color: var(--text-color-dark);
     --p-button-text-secondary-color: var(--text-color-dark);
