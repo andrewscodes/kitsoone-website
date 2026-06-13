@@ -46,6 +46,11 @@ export class SearchResultsComponent implements OnDestroy {
   protected availableFilters: AvailableFiltersResponse | null = null;
   protected searchTerm = '';
   protected searchInput = '';
+  protected currentFilters: ProductFilters = {
+    categories: [],
+    connectivity: [],
+    colors: [],
+  };
 
   protected isLoadingProducts = false;
   protected productsError: string | null = null;
@@ -57,7 +62,7 @@ export class SearchResultsComponent implements OnDestroy {
         const q = params.get('q') ?? '';
         this.searchTerm = q;
         this.searchInput = q;
-        this.loadProducts(undefined, q);
+        this.loadProducts(this.currentFilters, q);
       });
 
     this.inputSubject
@@ -71,6 +76,7 @@ export class SearchResultsComponent implements OnDestroy {
   }
 
   protected onFilterChange(filters: ProductFilters): void {
+    this.currentFilters = filters;
     this.loadProducts(filters, this.searchTerm);
   }
 
@@ -93,7 +99,12 @@ export class SearchResultsComponent implements OnDestroy {
 
     this.apiService.searchProducts({ ...filters, searchTerm }).subscribe({
       next: (response) => {
-        if (!filters) {
+        if (
+          !filters ||
+          Object.keys(filters).every(
+            (k) => !filters[k as keyof ProductFilters]?.length,
+          )
+        ) {
           this.allProducts = response.products;
           this.availableFilters = response.availableFilters;
         }
