@@ -1,0 +1,94 @@
+<p-drawer
+  [(visible)]="visible"
+  position="right"
+  [style]="{ width: '420px' }"
+  [modal]="true"
+  [blockScroll]="true"
+  (onHide)="close()"
+>
+  <ng-template #header>
+    <div class="cart-drawer__header">
+      <h2 class="cart-drawer__title">Tu carrito</h2>
+    </div>
+  </ng-template>
+
+  <div class="cart-drawer__content">
+    @if ((cartItems$ | async); as items) {
+      @if (items.length === 0) {
+        <div class="cart-drawer__empty">
+          <i class="pi pi-shopping-cart cart-drawer__empty-icon"></i>
+          <p class="cart-drawer__empty-text">Tu carrito está vacío</p>
+          <button class="default-button cart-drawer__empty-btn" (click)="goToProducts()">Empezar a comprar</button>
+        </div>
+      } @else {
+        <ul class="cart-drawer__items">
+          @for (item of items; track item.productId + (item.variantId ?? '')) {
+            <li class="cart-drawer__item">
+              <img
+                [src]="item.imageUrl"
+                [alt]="item.name"
+                class="cart-drawer__item-image"
+              />
+              <div class="cart-drawer__item-details">
+                <span class="cart-drawer__item-name">{{ item.name }}</span>
+                @if (item.selectedOptions?.length) {
+                  <div class="cart-drawer__item-options">
+                    @for (opt of item.selectedOptions; track opt.name) {
+                      <span class="cart-drawer__item-option"><strong>{{ opt.name }}:</strong> {{ opt.value }}</span>
+                    }
+                  </div>
+                }
+                <span class="cart-drawer__item-price">${{ item.price | number:'1.0-0':'es' }}</span>
+                <div class="cart-drawer__item-quantity">
+                  <div class="cart-drawer__qty-control">
+                    <button
+                      type="button"
+                      class="cart-drawer__qty-control-btn"
+                      (click)="decrement(item)"
+                      [disabled]="item.quantity <= 1"
+                      aria-label="Disminuir cantidad"
+                    >
+                      &minus;
+                    </button>
+                    <span class="cart-drawer__qty-control-value">{{ item.quantity }}</span>
+                    <button
+                      type="button"
+                      class="cart-drawer__qty-control-btn"
+                      (click)="increment(item)"
+                      aria-label="Aumentar cantidad"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button
+                    class="cart-drawer__remove-btn"
+                    (click)="remove(item)"
+                    aria-label="Eliminar producto"
+                  >
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <span class="cart-drawer__item-total">${{ item.price * item.quantity | number:'1.0-0':'es' }}</span>
+            </li>
+          }
+        </ul>
+      }
+    }
+  </div>
+
+  <ng-template #footer>
+    @if ((cartItems$ | async)?.length) {
+      <div class="cart-drawer__footer">
+        <div class="cart-drawer__subtotal">
+          <span>Subtotal</span>
+          <span class="cart-drawer__subtotal-value">${{ subtotal$ | async | number:'1.0-0':'es' }}</span>
+        </div>
+        <a class="cart-drawer__checkout-whatsapp" [href]="checkoutWhatsAppUrl" target="_blank" rel="noopener noreferrer">
+          <i class="pi pi-whatsapp"></i>
+          Ordenar por WhatsApp
+        </a>
+      </div>
+    }
+  </ng-template>
+</p-drawer>

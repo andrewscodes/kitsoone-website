@@ -218,7 +218,20 @@ export class ProductComponent implements OnDestroy {
   protected addToCart(): void {
     if (!this.product || !this.allOptionsSelected) return;
     this.clampQuantity();
-    this.cartService.addItem(this.quantity);
+    const variant = this.selectedVariant;
+    this.cartService.addItem(
+      {
+        productId: this.product.id,
+        variantId: variant?.id,
+        name: this.product.name,
+        price: variant?.price ?? this.product.price,
+        imageUrl: variant?.imageUrl ?? this.product.imageUrl,
+        selectedOptions: variant
+          ? variant.selectedOptions.map((o) => ({ name: o.optionName, value: o.value }))
+          : undefined,
+      },
+      this.quantity,
+    );
     this.cdr.markForCheck();
   }
 

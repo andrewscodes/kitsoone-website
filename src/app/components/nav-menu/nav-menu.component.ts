@@ -19,17 +19,25 @@ import {
 } from '../../constants';
 import { CartService } from '../../service';
 import { SearchComponent } from '../search/search.component';
+import { CartComponent } from '../cart/cart.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kitsoone-nav-menu',
   standalone: true,
-  imports: [RouterModule, AsyncPipe, OverlayBadgeModule, SearchComponent],
+  imports: [
+    RouterModule,
+    AsyncPipe,
+    OverlayBadgeModule,
+    SearchComponent,
+    CartComponent,
+  ],
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss'],
 })
 export class NavMenuComponent {
   @ViewChild(SearchComponent) public searchComponent!: SearchComponent;
+  @ViewChild(CartComponent) public cartComponent!: CartComponent;
 
   protected readonly cartItemCount$ = inject(CartService).itemCount$;
   protected isSidebarMenuOpen = false;
@@ -69,7 +77,7 @@ export class NavMenuComponent {
   }
 
   protected onCartClick(): void {
-    this.router.navigate(['/cart']);
+    this.cartComponent?.open();
   }
 
   public onLogoClick(): void {
