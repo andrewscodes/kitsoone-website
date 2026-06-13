@@ -9,6 +9,7 @@
             pInputText
             placeholder="Buscar productos..."
             [(ngModel)]="searchInput"
+            (ngModelChange)="onInputChange($event)"
             name="searchInput"
             class="search-results__input"
           />

@@ -15,7 +15,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { ProductListComponent } from '../product-list/product-list.component';
 import { ProductFilters } from '../products/products-filters/products-filters.component';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,6 +39,7 @@ export class SearchResultsComponent implements OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly destroy$ = new Subject<void>();
+  private readonly inputSubject = new Subject<string>();
 
   protected allProducts: ProductResponse[] = [];
   protected filteredProducts: ProductResponse[] = [];
@@ -58,6 +59,10 @@ export class SearchResultsComponent implements OnDestroy {
         this.searchInput = q;
         this.loadProducts(undefined, q);
       });
+
+    this.inputSubject
+      .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((query) => this.onNewSearch(query));
   }
 
   public ngOnDestroy(): void {
@@ -69,11 +74,16 @@ export class SearchResultsComponent implements OnDestroy {
     this.loadProducts(filters, this.searchTerm);
   }
 
-  protected onNewSearch(): void {
-    const query = this.searchInput.trim();
-    if (query) {
-      this.router.navigate(['/buscar'], { queryParams: { q: query } });
+  protected onInputChange(value: string): void {
+    const trimmed = value.trim();
+    if (trimmed === '' || trimmed.length >= 3) {
+      this.inputSubject.next(trimmed);
     }
+  }
+
+  protected onNewSearch(query?: string): void {
+    const q = (query ?? this.searchInput).trim();
+    this.router.navigate(['/buscar'], { queryParams: q ? { q } : {} });
   }
 
   private loadProducts(filters?: ProductFilters, searchTerm?: string): void {
