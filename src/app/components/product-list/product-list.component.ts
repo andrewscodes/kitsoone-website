@@ -5,6 +5,8 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
   CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -47,6 +49,8 @@ export class ProductListComponent {
   @Input() public error: string | null = null;
   @Output() public filtersChange = new EventEmitter<ProductFilters>();
 
+  private readonly cdr = inject(ChangeDetectorRef);
+
   protected readonly slugify = slugify;
   protected readonly categoryLabels: Record<string, string> = {
     Keyboard: 'Teclado',
@@ -61,8 +65,9 @@ export class ProductListComponent {
     { icon: 'pi pi-table', value: 'grid' },
   ];
 
-  protected onFiltersVisibleChange(value: boolean): void {
-    this.isFiltersOpen = value;
+  protected closeFilters(): void {
+    this.isFiltersOpen = false;
+    this.cdr.markForCheck();
   }
 
   protected getCategory(product: ProductResponse): string {
