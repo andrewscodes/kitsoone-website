@@ -84,7 +84,7 @@
           <span>Subtotal</span>
           <span class="cart-drawer__subtotal-value">${{ subtotal$ | async | number:'1.0-0':'es' }}</span>
         </div>
-        <a class="cart-drawer__checkout-whatsapp" [href]="checkoutWhatsAppUrl" target="_blank" rel="noopener noreferrer">
+        <a class="cart-drawer__checkout-whatsapp" [href]="checkoutWhatsAppUrl" target="_blank" rel="noopener noreferrer" (click)="onCheckout()">
           <i class="pi pi-whatsapp"></i>
           Ordenar por WhatsApp
         </a>

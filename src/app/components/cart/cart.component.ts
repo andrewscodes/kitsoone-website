@@ -79,4 +79,9 @@ export class CartComponent {
     this.close();
     this.router.navigate(['/productos']);
   }
+
+  protected onCheckout(): void {
+    this.cartService.clearCart();
+    this.close();
+  }
 }
