@@ -1,6 +1,7 @@
 .product-list {
   &__filters {
     --p-drawer-color: var(--text-color-dark);
+    --p-button-text-secondary-color: var(--text-color-dark);
     --p-accordion-content-color: var(--text-color-dark);
 
     :deep(.p-drawer-content) {
