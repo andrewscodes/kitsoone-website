@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'kitsoone-search',
@@ -28,6 +29,7 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 export class SearchComponent {
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   public visibleSearch = false;
   public searchQuery = '';
@@ -59,15 +61,10 @@ export class SearchComponent {
   }
 
   protected onSearch(): void {
-    if (this.searchQuery.trim()) {
-      this.isSearching = true;
-      console.warn('Searching for:', this.searchQuery);
-      // Simulate API call
-      setTimeout(() => {
-        this.isSearching = false;
-        this.cdr.markForCheck();
-        // TODO: Navigate to search results or update product list
-      }, 500);
+    const query = this.searchQuery.trim();
+    if (query) {
+      this.closeSearch();
+      this.router.navigate(['/productos'], { queryParams: { q: query } });
     }
   }
 }

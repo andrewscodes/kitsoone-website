@@ -4,13 +4,14 @@ import {
   inject,
   ChangeDetectorRef,
   CUSTOM_ELEMENTS_SCHEMA,
-  afterNextRender,
+  OnDestroy,
 } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { KitsooneApiService, ProductResponse } from '../../service';
 import { AvailableFiltersResponse } from '../../service/models/api.models';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DataViewModule } from 'primeng/dataview';
 import { DrawerModule } from 'primeng/drawer';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -40,18 +41,21 @@ import { slugify } from '../../constants';
   styleUrls: ['./products.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnDestroy {
   private readonly apiService = inject(KitsooneApiService);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly route = inject(ActivatedRoute);
   private readonly categoryLabels: Record<string, string> = {
     Keyboard: 'Teclado',
     Part: 'Accesorio',
   };
+  private readonly destroy$ = new Subject<void>();
 
   protected readonly slugify = slugify;
   protected allProducts: ProductResponse[] = [];
   protected filteredProducts: ProductResponse[] = [];
   protected availableFilters: AvailableFiltersResponse | null = null;
+  protected searchTerm = '';
 
   protected isFiltersOpen = false;
   protected skeletonItems = SKELETON_ITEMS;
@@ -64,9 +68,18 @@ export class ProductsComponent {
   protected productsError: string | null = null;
 
   constructor() {
-    afterNextRender(() => {
-      this.loadProducts();
-    });
+    this.route.queryParamMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => {
+        const q = params.get('q') ?? '';
+        this.searchTerm = q;
+        this.loadProducts(undefined, q);
+      });
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   protected onFiltersVisibleChange(value: boolean): void {
@@ -81,15 +94,15 @@ export class ProductsComponent {
   }
 
   protected onFilterChange(filters: ProductFilters): void {
-    this.loadProducts(filters);
+    this.loadProducts(filters, this.searchTerm);
   }
 
-  private loadProducts(filters?: ProductFilters): void {
+  private loadProducts(filters?: ProductFilters, searchTerm?: string): void {
     this.isLoadingProducts = true;
     this.productsError = null;
     this.cdr.markForCheck();
 
-    this.apiService.searchProducts(filters).subscribe({
+    this.apiService.searchProducts({ ...filters, searchTerm }).subscribe({
       next: (response) => {
         if (!filters) {
           this.allProducts = response.products;
