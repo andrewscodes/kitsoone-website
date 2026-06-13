@@ -44,11 +44,12 @@
   }
 
   --p-inputtext-color: var(--text-color-dark);
+  --p-textarea-color: var(--text-color-dark);
   --p-inputtext-border-color: var(--transparent-black-strong);
   --p-textarea-border-color: var(--transparent-black-strong);
   --p-inputtext-hover-border-color: var(--transparent-black-strong);
   --p-textarea-hover-border-color: var(--transparent-black-strong);
-  --p-floatlabel-color: var(--text-color-dark);
+  --p-floatlabel-color: var(--text-color-medium);
 
   --p-floatlabel-focus-color: var(--primary-accent);
   --p-inputtext-focus-border-color: var(--primary-accent);
@@ -63,6 +64,13 @@
   textarea.p-textarea.p-invalid:enabled:hover,
   textarea.p-textarea.p-invalid:enabled:focus {
     border-color: var(--p-inputtext-invalid-border-color);
+  }
+
+  input.p-inputtext,
+  textarea.p-textarea {
+    &::placeholder {
+      color: var(--text-color-medium);
+    }
   }
 
   &__submit {

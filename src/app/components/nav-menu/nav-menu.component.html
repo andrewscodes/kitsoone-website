@@ -39,7 +39,7 @@
     </ul>
 
     <div class="navbar__actions">
-      <button class="navbar__search navbar-button">
+      <button class="navbar__search navbar-button" (click)="onSearchClick()" aria-label="Search">
         <i class="pi pi-search"></i>
       </button>
 
@@ -60,3 +60,5 @@
     </div>
   </div>
 </nav>
+
+<kitsoone-search></kitsoone-search>

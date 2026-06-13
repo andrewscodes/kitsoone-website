@@ -1,0 +1,25 @@
+<p-drawer
+  [(visible)]="visibleSearch"
+  position="top"
+  [style]="{ height: 'auto' }"
+  [modal]="true"
+  (onHide)="closeSearch()"
+>
+  <div class="search-drawer__content">
+    <img src="assets/images/kitsoone_logo.png" alt="kitsoone Logo" class="search-drawer__logo" />
+    <p-iconfield class="search-drawer__field">
+      <input
+        type="text"
+        pInputText
+        placeholder="Buscar productos..."
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch()"
+        class="search-drawer__input"
+      />
+      <p-inputicon class="pi pi-search search-drawer__icon" (click)="onSearch()" />
+    </p-iconfield>
+    <button class="search-drawer__close" type="button" aria-label="Cerrar busqueda" (click)="closeSearch()">
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+</p-drawer>

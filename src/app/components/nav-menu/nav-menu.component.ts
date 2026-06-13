@@ -5,6 +5,7 @@ import {
   Inject,
   DOCUMENT,
   ChangeDetectionStrategy,
+  ViewChild,
 } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
@@ -17,16 +18,19 @@ import {
   generateWhatsAppUrl,
 } from '../../constants';
 import { CartService } from '../../service';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kitsoone-nav-menu',
   standalone: true,
-  imports: [RouterModule, AsyncPipe, OverlayBadgeModule],
+  imports: [RouterModule, AsyncPipe, OverlayBadgeModule, SearchComponent],
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss'],
 })
 export class NavMenuComponent {
+  @ViewChild(SearchComponent) public searchComponent!: SearchComponent;
+
   protected readonly cartItemCount$ = inject(CartService).itemCount$;
   protected isSidebarMenuOpen = false;
 
@@ -80,5 +84,9 @@ export class NavMenuComponent {
   protected onProductsItemClick(): void {
     this.router.navigate(['/productos']);
     this.onMenuItemClick();
+  }
+
+  protected onSearchClick(): void {
+    this.searchComponent?.openSearch();
   }
 }
