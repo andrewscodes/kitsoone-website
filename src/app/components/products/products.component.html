@@ -2,118 +2,12 @@
   <div class="products__header">
     <h1>Todos los Productos</h1>
   </div>
-  
-  <p-drawer class="products__filters" [visible]="isFiltersOpen" (visibleChange)="onFiltersVisibleChange($event)" header="Filtros" position="left">
-    <kitsoone-products-filters
-      ngSkipHydration
-      idPrefix="drawer-"
-      [availableFilters]="availableFilters"
-      [allProducts]="allProducts"
-      (filtersChange)="onFilterChange($event)"
-    />
-  </p-drawer>
 
-  <div class="products__container">
-    <aside class="products__container-filters">
-      <kitsoone-products-filters
-        ngSkipHydration
-        idPrefix="aside-"
-        [availableFilters]="availableFilters"
-        [allProducts]="allProducts"
-        (filtersChange)="onFilterChange($event)"
-      />
-    </aside>
-    
-    <div class="products__main">      
-      @if (isLoadingProducts) {
-        <div class="grid grid-cols-12 gap-4 md:gap-8 mb-10">
-          @for (i of skeletonItems; track i) {
-            <div class="col-span-6 md:col-span-4 lg:col-span-3">
-              <div class="border-surface product-card">
-                <p-skeleton width="100%" height="200px" class="mb-3" />
-                <p-skeleton width="100%" class="mb-2" />
-                <p-skeleton width="40%" />
-              </div>
-            </div>
-          }
-        </div>
-      }
-
-      <!-- Error state -->
-      @if (productsError && !isLoadingProducts) {
-        <div class="products__error">
-          <i class="pi pi-exclamation-triangle text-2xl"></i>
-          <p class="mt-2">Ocurrió un problema al momento de cargar los productos.</p>
-        </div>
-      }
-
-      <!-- Products grid -->
-      @if (!isLoadingProducts && !productsError) {   
-      <p-dataview
-        [value]="filteredProducts"
-        [paginator]="true"
-        [totalRecords]="filteredProducts.length"
-        [rows]="10"
-        [layout]="layout">
-        <ng-template #header>
-          <div class="flex justify-between items-center">
-            <button
-              type="button"
-              (click)="isFiltersOpen = true"
-              class="flex md:hidden items-center gap-2 px-4 py-2 pl-0">
-              <i class="pi pi-sliders-h"></i> Filtros
-            </button>
-            <div class="flex justify-end flex-1">
-              <p-selectbutton [(ngModel)]="layout" [options]="layoutOptions" optionValue="value" [allowEmpty]="false">
-                <ng-template #item let-item>
-                  <i [class]="item.icon"></i>
-                </ng-template>
-              </p-selectbutton>
-            </div>
-          </div>
-        </ng-template>
-        <ng-template #emptymessage>
-          <div class="products__empty">
-            <i class="pi pi-search products__empty-icon"></i>
-            <p>No se encontraron productos con los filtros seleccionados.</p>
-          </div>
-        </ng-template>
-        <ng-template #list let-items>
-          <div class="flex flex-col gap-4 mb-10">
-            @for (product of items; track product.id) {
-            <div class="flex gap-4 items-center border-surface product-card" [routerLink]="['/productos', slugify(product.name)]">
-              <div class="relative shrink-0 w-40 h-40 product-card__media">
-                <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover rounded-border" />
-              </div>
-              <div>
-                <div class="font-medium">{{ product.name || 'Product Name' }}</div>
-                <div class="text-sm text-muted-color">{{ getCategory(product) }}</div>
-                <div class="font-semibold text-lg mt-1">${{ product.price | number:'1.0-0':'es' }}</div>
-              </div>
-            </div>
-            }
-          </div>
-        </ng-template>
-        <ng-template #grid let-items>
-          <div class="grid grid-cols-12 gap-4 md:gap-8 mb-10">
-            @for (product of items; track product.id) {
-            <div class="col-span-6 md:col-span-4 lg:col-span-3">
-              <div class="border-surface product-card" [routerLink]="['/productos', slugify(product.name)]">
-                <div class="relative mx-auto product-card__media">                    
-                  <img [src]="product.imageUrl" [alt]="product.name" class="w-full rounded-border" />
-                </div>
-                <div class="font-medium mt-2">{{ product.name || 'Product Name' }}</div>
-                <div class="text-sm text-muted-color">{{ getCategory(product) }}</div>
-                <div class="flex justify-between items-center">
-                  <div class="mt-0 font-semibold text-lg">${{ product.price | number:'1.0-0':'es' }}</div>                     
-                </div>
-              </div>
-            </div>
-            }
-          </div>
-        </ng-template>
-      </p-dataview>       
-      }
-    </div>
-  </div>
+  <kitsoone-product-list
+    [products]="filteredProducts"
+    [availableFilters]="availableFilters"
+    [isLoading]="isLoadingProducts"
+    [error]="productsError"
+    (filtersChange)="onFilterChange($event)"
+  />
 </section>

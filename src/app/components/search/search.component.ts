@@ -64,7 +64,7 @@ export class SearchComponent {
     const query = this.searchQuery.trim();
     if (query) {
       this.closeSearch();
-      this.router.navigate(['/productos'], { queryParams: { q: query } });
+      this.router.navigate(['/buscar'], { queryParams: { q: query } });
     }
   }
 }

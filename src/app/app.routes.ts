@@ -3,6 +3,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ProductComponent } from './components/product/product.component';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { WarrantyComponent } from './components/policies/warranty/warranty.component';
 import { TermsOfServiceComponent } from './components/policies/terms/terms.component';
 import { ShippingComponent } from './components/policies/shipping/shipping.component';
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'acerca', component: AboutComponent },
   { path: 'productos', component: ProductsComponent },
   { path: 'productos/:slug', component: ProductComponent },
+  { path: 'buscar', component: SearchResultsComponent },
   { path: 'garantia', component: WarrantyComponent },
   { path: 'envios', component: ShippingComponent },
   { path: 'terminos', component: TermsOfServiceComponent },

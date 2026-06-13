@@ -7,17 +7,19 @@
 >
   <div class="search-drawer__content">
     <img src="assets/images/kitsoone_logo.png" alt="kitsoone Logo" class="search-drawer__logo" />
-    <p-iconfield class="search-drawer__field">
-      <input
-        type="text"
-        pInputText
-        placeholder="Buscar productos..."
-        [(ngModel)]="searchQuery"
-        (keyup.enter)="onSearch()"
-        class="search-drawer__input"
-      />
-      <p-inputicon class="pi pi-search search-drawer__icon" (click)="onSearch()" />
-    </p-iconfield>
+    <form (ngSubmit)="onSearch()" class="search-drawer__form">
+      <p-iconfield class="search-drawer__field">
+        <input
+          type="text"
+          pInputText
+          placeholder="Buscar productos..."
+          [(ngModel)]="searchQuery"
+          name="searchQuery"
+          class="search-drawer__input"
+        />
+        <p-inputicon class="pi pi-search search-drawer__icon" (click)="onSearch()" />
+      </p-iconfield>
+    </form>
     <button class="search-drawer__close" type="button" aria-label="Cerrar busqueda" (click)="closeSearch()">
       <i class="pi pi-times"></i>
     </button>

@@ -1,0 +1,28 @@
+<section class="search-results page-width">
+  <div class="search-results__header">
+    <h1>Resultados de la búsqueda</h1>
+    <div class="search-results__search-box">
+      <form (ngSubmit)="onNewSearch()" class="search-results__form">
+        <p-iconfield class="search-results__field">
+          <input
+            type="text"
+            pInputText
+            placeholder="Buscar productos..."
+            [(ngModel)]="searchInput"
+            name="searchInput"
+            class="search-results__input"
+          />
+          <p-inputicon class="pi pi-search search-results__icon" (click)="onNewSearch()" />
+        </p-iconfield>
+      </form>
+    </div>
+  </div>
+
+  <kitsoone-product-list
+    [products]="filteredProducts"
+    [availableFilters]="availableFilters"
+    [isLoading]="isLoadingProducts"
+    [error]="productsError"
+    (filtersChange)="onFilterChange($event)"
+  />
+</section>
