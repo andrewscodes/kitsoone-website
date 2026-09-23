@@ -5,7 +5,7 @@ frontend:
       commands:
         - node -v
         - npm -v
-        - npm ci --cache .npm --prefer-offline
+        - npm ci
         - cp src/assets/config/app.config.template.json src/assets/config/app.config.json
         - sed -i "s|#{API_URL}|$API_URL|g" src/assets/config/app.config.json
         - sed -i "s|#{COGNITO_USER_POOL_ID}|$COGNITO_USER_POOL_ID|g" src/assets/config/app.config.json
