@@ -9,6 +9,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { DatePickerModule } from 'primeng/datepicker';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../../service/auth.service';
@@ -27,6 +28,7 @@ import { EmailValidationToastDirective } from '../../directives/email-validation
     FloatLabelModule,
     InputTextModule,
     PasswordModule,
+    DatePickerModule,
     ToastModule,
     RequiredLabelDirective,
     EmailValidDirective,
@@ -41,13 +43,29 @@ export class SignupComponent {
   private readonly apiService = inject(KitsooneApiService);
   private readonly router = inject(Router);
   private readonly messageService = inject(MessageService);
+  public readonly today = new Date();
+
   public email = '';
   public name = '';
   public dateOfBirth = '';
+  public dateOfBirthValue: Date | null = null;
   public password = '';
   public confirmPassword = '';
   public submitAttempted = signal(false);
   public submitting = signal(false);
+
+  public onDateOfBirthChange(date: Date | null): void {
+    this.dateOfBirthValue = date;
+    this.dateOfBirth = date ? this.formatDateForApi(date) : '';
+  }
+
+  private formatDateForApi(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
 
   public onSubmit(form: NgForm): void {
     this.submitAttempted.set(true);

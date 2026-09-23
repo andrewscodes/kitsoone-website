@@ -25,7 +25,6 @@
 
   &__date {
     width: 100%;
-    color-scheme: dark;
   }
 
   &__submit {
@@ -83,8 +82,13 @@
     width: 100%;
 
     input,
-    .p-password {
+    .p-password,
+    .p-datepicker {
       width: 100%;
     }
+  }
+
+  .signup__date {
+    width: 100%;
   }
 }

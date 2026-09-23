@@ -30,13 +30,16 @@
     </p-floatlabel>
 
     <p-floatlabel variant="in">
-      <input
-        pInputText
+      <p-datepicker
         id="dateOfBirth"
         name="dateOfBirth"
-        type="date"
-        [(ngModel)]="dateOfBirth"
-        class="signup__date" />
+        [(ngModel)]="dateOfBirthValue"
+        (ngModelChange)="onDateOfBirthChange($event)"
+        [showIcon]="true"
+        [maxDate]="today"
+        dateFormat="dd/mm/yy"
+        styleClass="signup__date">
+      </p-datepicker>
       <label for="dateOfBirth" required>Fecha de nacimiento</label>
     </p-floatlabel>
 
