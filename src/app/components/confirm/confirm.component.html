@@ -13,8 +13,12 @@
     class="default-button confirm__resend"
     [disabled]="resending() || !email"
     (click)="resendConfirmationEmail()">
-    <i class="pi pi-envelope"></i>
-    Reenviar correo
+    @if (resending()) {
+      <i class="pi pi-spinner pi-spin"></i>
+    } @else {
+      <i class="pi pi-envelope"></i>
+      Reenviar correo
+    }
   </button>
 
   <div class="confirm__links">

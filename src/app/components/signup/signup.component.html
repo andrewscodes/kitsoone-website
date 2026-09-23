@@ -74,7 +74,11 @@
       type="submit"
       class="default-button signup__submit"
       [disabled]="submitting()">
-      Crear cuenta
+      @if (submitting()) {
+        <i class="pi pi-spinner pi-spin"></i>
+      } @else {
+        Crear cuenta
+      }
     </button>
   </form>
 

@@ -34,7 +34,11 @@
       type="submit"
       class="default-button login__submit"
       [disabled]="submitting()">
-      Ingresar
+      @if (submitting()) {
+        <i class="pi pi-spinner pi-spin"></i>
+      } @else {
+        Ingresar
+      }
     </button>
   </form>
 
