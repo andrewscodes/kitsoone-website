@@ -108,6 +108,12 @@ export interface ApiError {
   details?: unknown;
 }
 
+export interface CartItemRequest {
+  productId: string;
+  variantId?: string;
+  quantity: number;
+}
+
 export interface ShowcaseItem {
   id: string | number;
   image: string;

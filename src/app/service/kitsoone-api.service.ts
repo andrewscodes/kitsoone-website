@@ -5,10 +5,12 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import {
   ApiError,
+  CartItemRequest,
   ProductListResponse,
   ProductResponse,
   SearchProductsRequest,
 } from './models/api.models';
+import { ConfigService } from './config.service';
 
 export interface ProductQueryFilters {
   searchTerm?: string;
@@ -22,10 +24,11 @@ export interface ProductQueryFilters {
 })
 export class KitsooneApiService {
   private readonly http = inject(HttpClient);
+  private readonly configService = inject(ConfigService);
 
-  // AWS Configuration
-  private readonly baseUrl =
-    'https://tb3ccmgnq5wmqasv7xbfil6w7q0rioau.lambda-url.us-east-2.on.aws';
+  private get baseUrl(): string {
+    return this.configService.appConfig?.apiUrl ?? '';
+  }
 
   /**
    * Search products with filters and search term
@@ -81,6 +84,55 @@ export class KitsooneApiService {
             ),
       ),
     );
+  }
+
+  public saveProfile(
+    name: string,
+    dateOfBirth: string,
+    email: string,
+  ): Observable<void> {
+    return this.http
+      .post<void>(`${this.baseUrl}/api/me/profile`, {
+        name,
+        dateOfBirth,
+        email,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Anonymous endpoint: creates the DB profile right after Cognito signUp, before the account is confirmed. */
+  public registerProfile(
+    cognitoSub: string,
+    name: string,
+    email: string,
+    dateOfBirth: string,
+  ): Observable<void> {
+    return this.http
+      .post<void>(`${this.baseUrl}/api/register/profile`, {
+        cognitoSub,
+        name,
+        email,
+        dateOfBirth,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  public getCart(): Observable<CartItemRequest[]> {
+    return this.http
+      .get<CartItemRequest[]>(`${this.baseUrl}/api/me/cart`)
+      .pipe(catchError(this.handleError));
+  }
+
+  public saveCart(items: CartItemRequest[]): Observable<void> {
+    return this.http
+      .put<void>(`${this.baseUrl}/api/me/cart`, items)
+      .pipe(catchError(this.handleError));
+  }
+
+  public mergeCart(items: CartItemRequest[]): Observable<CartItemRequest[]> {
+    return this.http
+      .post<CartItemRequest[]>(`${this.baseUrl}/api/me/cart/merge`, items)
+      .pipe(catchError(this.handleError));
   }
 
   /**

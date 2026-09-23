@@ -44,8 +44,8 @@
     <!-- Error state -->
     @if (error && !isLoading) {
       <div class="product-list__error">
-        <i class="pi pi-exclamation-triangle text-2xl"></i>
-        <p class="mt-2">{{ error }}</p>
+        <i class="pi pi-exclamation-triangle product-list__error-icon"></i>
+        <p>{{ ERROR_FETCH_PRODUCTS }}</p>
       </div>
     }
 
@@ -77,7 +77,7 @@
       <ng-template #emptymessage>
         <div class="product-list__empty">
           <i class="pi pi-search product-list__empty-icon"></i>
-          <p>No se encontraron productos con los filtros seleccionados.</p>
+          <p>{{ EMPTY_PRODUCTS_SEARCH_MESSAGE }}</p>
         </div>
       </ng-template>
       <ng-template #list let-items>

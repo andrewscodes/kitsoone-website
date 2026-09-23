@@ -1,0 +1,82 @@
+<section class="signup">
+  <h1 class="signup__title">Crear cuenta</h1>
+
+  <p-toast></p-toast>
+
+  <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)" emailValidationToast class="signup__form">
+    <p-floatlabel variant="in">
+      <input
+        pInputText
+        id="name"
+        name="name"
+        type="text"
+        [(ngModel)]="name"
+        maxlength="100"
+        autocomplete="name" />
+      <label for="name" required>Nombre completo</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="in">
+      <input
+        pInputText
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="email"
+        maxlength="100"
+        emailValid
+        autocomplete="email" />
+      <label for="email" required>Correo electrónico</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="in">
+      <input
+        pInputText
+        id="dateOfBirth"
+        name="dateOfBirth"
+        type="date"
+        [(ngModel)]="dateOfBirth"
+        class="signup__date" />
+      <label for="dateOfBirth" required>Fecha de nacimiento</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="in">
+      <p-password
+        id="password"
+        [(ngModel)]="password"
+        name="password"
+        [toggleMask]="true"
+        [maxlength]="128"
+        autocomplete="new-password"
+        styleClass="signup__password">
+      </p-password>
+      <label for="password" required>Contraseña</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="in">
+      <p-password
+        id="confirmPassword"
+        [(ngModel)]="confirmPassword"
+        name="confirmPassword"
+        [feedback]="false"
+        [toggleMask]="true"
+        [maxlength]="128"
+        autocomplete="new-password"
+        styleClass="signup__password">
+      </p-password>
+      <label for="confirmPassword" required>Confirmar contraseña</label>
+    </p-floatlabel>
+
+    <button
+      type="submit"
+      class="default-button signup__submit"
+      [disabled]="submitting()">
+      Crear cuenta
+    </button>
+  </form>
+
+  <div class="signup__links">
+    <span class="signup__text">¿Ya tienes cuenta?</span>
+    <a routerLink="/login" class="signup__link">Iniciar sesión</a>
+  </div>
+</section>

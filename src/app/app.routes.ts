@@ -8,6 +8,11 @@ import { WarrantyComponent } from './components/policies/warranty/warranty.compo
 import { TermsOfServiceComponent } from './components/policies/terms/terms.component';
 import { ShippingComponent } from './components/policies/shipping/shipping.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,5 +24,10 @@ export const routes: Routes = [
   { path: 'envios', component: ShippingComponent },
   { path: 'terminos', component: TermsOfServiceComponent },
   { path: 'contacto', component: ContactComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'confirm', component: ConfirmComponent },
+  { path: 'recovery', component: ForgotPasswordComponent },
+  { path: 'reset', component: ResetPasswordComponent },
   { path: '**', redirectTo: '' },
 ];

@@ -8,6 +8,10 @@ import {
   inject,
   ChangeDetectorRef,
 } from '@angular/core';
+import {
+  EMPTY_PRODUCTS_SEARCH_MESSAGE,
+  ERROR_FETCH_PRODUCTS,
+} from '../../constants/constants';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -51,6 +55,9 @@ export class ProductListComponent {
 
   private readonly cdr = inject(ChangeDetectorRef);
 
+  protected readonly ERROR_FETCH_PRODUCTS = ERROR_FETCH_PRODUCTS;
+  protected readonly EMPTY_PRODUCTS_SEARCH_MESSAGE =
+    EMPTY_PRODUCTS_SEARCH_MESSAGE;
   protected readonly slugify = slugify;
   protected readonly categoryLabels: Record<string, string> = {
     Keyboard: 'Teclado',

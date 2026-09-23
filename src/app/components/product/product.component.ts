@@ -26,7 +26,7 @@ import {
   ProductOptionResponse,
   ProductVariantResponse,
 } from '../../service/models/api.models';
-import { slugify } from '../../constants';
+import { ERROR_FETCH_PRODUCT, slugify } from '../../constants';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -70,6 +70,7 @@ export class ProductComponent implements OnDestroy {
   };
 
   protected readonly breadcrumbClass: string = 'Inicio';
+  protected readonly ERROR_FETCH_PRODUCT = ERROR_FETCH_PRODUCT;
   protected readonly slugify = slugify;
   protected readonly relatedSkeletonSlides = Array.from({ length: 4 });
   protected product: ProductResponse | null = null;
@@ -227,7 +228,10 @@ export class ProductComponent implements OnDestroy {
         price: variant?.price ?? this.product.price,
         imageUrl: variant?.imageUrl ?? this.product.imageUrl,
         selectedOptions: variant
-          ? variant.selectedOptions.map((o) => ({ name: o.optionName, value: o.value }))
+          ? variant.selectedOptions.map((o) => ({
+              name: o.optionName,
+              value: o.value,
+            }))
           : undefined,
       },
       this.quantity,
@@ -289,7 +293,7 @@ export class ProductComponent implements OnDestroy {
         this.flushView();
       },
       error: (err) => {
-        this.error = err.message || 'Error al cargar el producto.';
+        this.error = err.message || ERROR_FETCH_PRODUCT;
         this.product = null;
         this.relatedProducts = [];
         this.breadcrumbItems = [];

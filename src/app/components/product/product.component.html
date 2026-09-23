@@ -19,8 +19,8 @@
 
   @if (error && !isLoading) {
     <div class="product__error">
-      <i class="pi pi-exclamation-triangle"></i>
-      <p>Ocurrió un problema al momento de cargar el producto.</p>
+      <i class="pi pi-exclamation-triangle product__error-icon"></i>
+      <p>{{ ERROR_FETCH_PRODUCT }}</p>
     </div>
   }
 

@@ -54,18 +54,6 @@
   --p-floatlabel-focus-color: var(--primary-accent);
   --p-inputtext-focus-border-color: var(--primary-accent);
 
-  --p-floatlabel-invalid-color: var(--color-error);
-  --p-inputtext-invalid-border-color: var(--color-error);
-
-  input.p-inputtext.p-invalid,
-  input.p-inputtext.p-invalid:enabled:hover,
-  input.p-inputtext.p-invalid:enabled:focus,
-  textarea.p-textarea.p-invalid,
-  textarea.p-textarea.p-invalid:enabled:hover,
-  textarea.p-textarea.p-invalid:enabled:focus {
-    border-color: var(--p-inputtext-invalid-border-color);
-  }
-
   input.p-inputtext,
   textarea.p-textarea {
     &::placeholder {

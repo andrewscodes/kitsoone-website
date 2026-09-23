@@ -43,8 +43,8 @@
         <i class="pi pi-search"></i>
       </button>
 
-      <button class="navbar__profile navbar-button">
-        <i class="pi pi-user"></i>
+      <button class="navbar__profile navbar-button" (click)="onProfileClick()" [attr.aria-label]="authService.isAuthenticated() ? 'Cerrar sesión' : 'Iniciar sesión'">
+        <i class="pi" [class.pi-user]="!authService.isAuthenticated()" [class.pi-sign-out]="authService.isAuthenticated()"></i>
       </button>
 
       @let cartCount = (cartItemCount$ | async) ?? 0;

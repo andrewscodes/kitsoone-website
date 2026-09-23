@@ -51,29 +51,38 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    padding: 0 2rem 5rem;
+    padding: 2rem 2rem 7rem;
     text-align: center;
+    color: var(--text-color-medium);
 
     p {
       font-size: 1rem;
       max-width: 320px;
-      opacity: 0.4;
     }
   }
 
   &__empty-icon {
     font-size: 3rem;
-    opacity: 0.4;
+    color: var(--text-color-medium);
   }
 
   &__error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 6rem 1rem;
     text-align: center;
-    padding: 3rem 1rem;
-    color: #ef4444;
+    color: var(--text-color-medium);
 
     p {
-      margin-top: 1rem;
       font-size: 1rem;
+      max-width: 320px;
     }
+  }
+
+  &__error-icon {
+    font-size: 3rem;
+    color: var(--text-color-medium);
   }
 }

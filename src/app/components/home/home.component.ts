@@ -15,7 +15,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AutoFocusModule } from 'primeng/autofocus';
-import { DISCORD_URL, slugify } from '../../constants';
+import { DISCORD_URL, ERROR_FETCH_PRODUCTS, slugify } from '../../constants';
 import {
   KitsooneApiService,
   ProductResponse,
@@ -56,6 +56,7 @@ export class HomeComponent {
   };
   protected readonly slugify = slugify;
   protected readonly discordUrl = DISCORD_URL;
+  protected readonly ERROR_FETCH_PRODUCTS = ERROR_FETCH_PRODUCTS;
   protected products: ProductResponse[] = [];
   protected productsSkeletonSlides = SKELETON_ITEMS;
   protected showcase: ShowcaseItem[] = SHOWCASE_ITEMS;

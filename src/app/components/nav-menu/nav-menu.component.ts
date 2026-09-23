@@ -18,6 +18,7 @@ import {
   generateWhatsAppUrl,
 } from '../../constants';
 import { CartService } from '../../service';
+import { AuthService } from '../../service/auth.service';
 import { SearchComponent } from '../search/search.component';
 import { CartComponent } from '../cart/cart.component';
 
@@ -40,6 +41,7 @@ export class NavMenuComponent {
   @ViewChild(CartComponent) public cartComponent!: CartComponent;
 
   protected readonly cartItemCount$ = inject(CartService).itemCount$;
+  protected readonly authService = inject(AuthService);
   protected isSidebarMenuOpen = false;
 
   // Social media URLs
@@ -96,5 +98,13 @@ export class NavMenuComponent {
 
   protected onSearchClick(): void {
     this.searchComponent?.openSearch();
+  }
+
+  protected onProfileClick(): void {
+    if (this.authService.isAuthenticated()) {
+      this.authService.signOut().then(() => this.router.navigate(['/']));
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }

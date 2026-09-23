@@ -1,0 +1,23 @@
+<section class="confirm">
+  <p-toast></p-toast>
+
+  <h1 class="confirm__title">Confirmación de correo requerida</h1>
+  <p class="confirm__description">
+    Enviamos un correo a <strong>{{ email }}</strong>. Revisa tu bandeja de
+    entrada para activar tu cuenta. Si no encuentras el correo de
+    confirmación, revisa la carpeta de Spam. Gracias.
+  </p>
+
+  <button
+    type="button"
+    class="default-button confirm__resend"
+    [disabled]="resending() || !email"
+    (click)="resendConfirmationEmail()">
+    <i class="pi pi-envelope"></i>
+    Reenviar correo
+  </button>
+
+  <div class="confirm__links">
+    <a routerLink="/login" class="confirm__link">Volver a iniciar sesión</a>
+  </div>
+</section>

@@ -14,6 +14,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import emailjs from '@emailjs/browser';
 import { EmailValidPipe } from '../../pipes/email-valid.pipe';
+import { RequiredLabelDirective } from '../../directives/required-label.directive';
+import { EmailValidDirective } from '../../directives/email-valid.directive';
 
 const EMAILJS_SERVICE_ID = 'service_3ljbvjz';
 const EMAILJS_TEMPLATE_ID = 'template_udznwss';
@@ -22,7 +24,7 @@ const NAME_LIMIT = 50;
 const EMAIL_LIMIT = 100;
 const COMMENT_LIMIT = 1000;
 const NAME_MAX_LENGTH = NAME_LIMIT - 1;
-const EMAIL_MAX_LENGTH = EMAIL_LIMIT - 1;
+const EMAIL_MAX_LENGTH = EMAIL_LIMIT;
 const COMMENT_MAX_LENGTH = COMMENT_LIMIT - 1;
 
 @Component({
@@ -37,6 +39,8 @@ const COMMENT_MAX_LENGTH = COMMENT_LIMIT - 1;
     InputTextModule,
     TextareaModule,
     ToastModule,
+    RequiredLabelDirective,
+    EmailValidDirective,
   ],
   providers: [MessageService],
   templateUrl: './contact.component.html',
@@ -106,7 +110,7 @@ export class ContactComponent {
         this.messageService.add({
           severity: 'error',
           summary: 'Correo invalido',
-          detail: `El correo electronico debe tener menos de ${EMAIL_LIMIT} caracteres.`,
+          detail: `El correo electronico no puede superar los ${EMAIL_LIMIT} caracteres.`,
         });
       } else if (!isEmailValid) {
         this.messageService.add({

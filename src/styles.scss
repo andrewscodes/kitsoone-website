@@ -32,6 +32,11 @@ body {
   color: var(--text-color-dark);
 }
 
+.required-label::after {
+  content: ' *';
+  color: var(--primary-accent);
+}
+
 .page-width {
     max-width: var(--page-width);
     margin: 0 auto;

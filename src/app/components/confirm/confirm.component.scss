@@ -1,0 +1,46 @@
+.confirm {
+  max-width: 450px;
+  margin: 4rem auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-color-dark);
+    margin-bottom: 3rem;
+  }
+
+  &__description {
+    color: var(--text-color-medium);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+
+    strong {
+      color: var(--text-color-dark);
+    }
+  }
+
+  &__resend {
+    width: 100%;
+    gap: 0.6rem;
+  }
+
+  &__links {
+    margin-top: 1.5rem;
+  }
+
+  &__link {
+    color: var(--primary-accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<section class="login">
+  <h1 class="login__title">Iniciar sesión</h1>
+
+  <p-toast></p-toast>
+
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" emailValidationToast class="login__form">
+    <p-floatlabel variant="in">
+      <input
+        pInputText
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="email"
+        maxlength="100"
+        emailValid
+        autocomplete="email" />
+      <label for="email" required>Correo electrónico</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="in">
+      <p-password
+        id="password"
+        [(ngModel)]="password"
+        name="password"
+        [feedback]="false"
+        [toggleMask]="true"
+        [maxlength]="128"
+        styleClass="login__password">
+      </p-password>
+      <label for="password" required>Contraseña</label>
+    </p-floatlabel>
+
+    <button
+      type="submit"
+      class="default-button login__submit"
+      [disabled]="submitting()">
+      Ingresar
+    </button>
+  </form>
+
+  <div class="login__links">
+    <a routerLink="/recovery" class="login__link">¿Olvidaste tu contraseña?</a>
+    <span class="login__separator">·</span>
+    <a routerLink="/signup" class="login__link">Crear cuenta</a>
+  </div>
+</section>

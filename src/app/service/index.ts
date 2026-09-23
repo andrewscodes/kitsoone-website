@@ -2,3 +2,4 @@
 export * from './models/api.models';
 export * from './kitsoone-api.service';
 export * from './cart.service';
+export * from './auth.service';

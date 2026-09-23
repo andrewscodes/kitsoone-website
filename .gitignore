@@ -40,3 +40,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Local config (generated from template)
+/src/assets/config/app.config.json
